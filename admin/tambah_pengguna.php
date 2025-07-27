@@ -11,6 +11,10 @@ $_SESSION['active_menu'] = 'pengguna';
 
 // Inline Javascript
 $inlineJS = '<script>
+    function simpanBtn(d){
+        d.disabled = true;
+        d.innerHTML = "<i class="fa fa-spinner fa-spin"></i>";
+    }
     $("#password, #confirmation_password").on("keyup", function () {
             if ($("#password").val() == $("#confirmation_password").val()) {
                 $("#message").html("Password match!").css("color", "green");
@@ -26,12 +30,25 @@ ob_start();
 
 <section class="content">
     <div class="row">
+        <div class="col-md-12">
+            <?php
+            if (isset($_GET['pesan'])) {
+                if ($_GET['pesan'] == "error") {
+                    $detail_error = $_GET['detail'];
+                    echo '<div class="alert alert-warning alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>Peringatan!</strong></br>' . $detail_error . '
+                        </div>';
+                }
+            }
+            ?>
+        </div>
         <div class="col-md-6">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Tambah Pengguna Baru</h3>
                 </div>
-                <form role="form">
+                <form role="form" action="proses_tambah_pengguna.php" method="POST">
                     <div class="box-body">
                         <div class="form-group">
                             <label>Nama</label>
@@ -58,7 +75,7 @@ ob_start();
                         <div class="form-group">
                             <label>Hak Akses</label>
                             <select name="hak_akses" class="form-control">
-                                <option>Pilih Hak Akses</option>
+                                <option value="">Pilih Hak Akses</option>
                                 <option value="admin_ruangan">Admin Ruangan</option>
                                 <option value="petugas_laundry">Petugas Laundry</option>
                                 <option value="kepala_penanggung_jawab">Kepala Penanggung Jawab</option>
@@ -67,7 +84,7 @@ ob_start();
                     </div>
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" name="submit" class="btn btn-primary" onclick="simpanBtn(this);">Submit</button>
                     </div>
                 </form>
             </div>
