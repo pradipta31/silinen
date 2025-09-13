@@ -33,8 +33,14 @@ if (isset($_POST['submit'])) {
     if (empty($error)) {
         $password = md5($password);
 
-        $query = mysqli_query($koneksi, "INSERT INTO users(nama, username, email, password, hak_akses, status) 
+        if ($hak_akses == 'admin_ruangan') {
+            $query = mysqli_query($koneksi, "INSERT INTO users(nama, username, email, password, hak_akses, status, status_ruangan) 
+            VALUES ('$nama', '$username', '$email', '$password', '$hak_akses', '$status', 0)");
+        } else {
+            $query = mysqli_query($koneksi, "INSERT INTO users(nama, username, email, password, hak_akses, status) 
             VALUES ('$nama', '$username', '$email', '$password', '$hak_akses', '$status')");
+        }
+        
 
         if ($query) {
             header('location: data_pengguna.php?pesan=berhasil');

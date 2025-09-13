@@ -34,15 +34,10 @@
                     <li><a href="../admin/data_pengguna.php"><i class="fa fa-arrow-circle-right"></i> Data Pengguna</a></li>
                 </ul>
             </li>
-            <li class="treeview">
-                <a href="#">
+            <li class="<?= $_SESSION['active_menu'] == 'ruangan' ? 'active' : '' ?>">
+                <a href="../admin/data_ruangan.php">
                     <i class="fa fa-building"></i> <span>Ruangan</span>
-                    <i class="fa fa-angle-left pull-right"></i>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-plus"></i> Tambah Ruangan Baru</a></li>
-                    <li><a href="#"><i class="fa fa-arrow-circle-right"></i> Data Ruangan</a></li>
-                </ul>
             </li>
             <li class="treeview">
                 <a href="#">
@@ -86,12 +81,12 @@
 
         <!-- MENU UNTUK PETUGAS LAUNDRY -->
         <?php
-            }else if($row['hak_akses'] == 'admin_ruangan'){
+            }else if($row['hak_akses'] == 'petugas_laundry'){
         ?>
 
         <!-- MENU UNTUK KEPALA PENANGGUNG JAWAB -->
         <?php
-            }else if($row['hak_akses'] == 'admin_ruangan'){
+            }else if($row['hak_akses'] == 'kepala_penanggung_jawab'){
         ?>
 
         <?php

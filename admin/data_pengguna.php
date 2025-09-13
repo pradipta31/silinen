@@ -44,6 +44,11 @@ ob_start();
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Berhasil!</strong> Data baru berhasil diinputkan!
             </div>';
+          }elseif ($_GET['pesan'] == "gagal") {
+            echo '<div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Gagal!</strong> Gagal input data baru!
+            </div>';
           }
         }
         ?>
@@ -65,9 +70,12 @@ ob_start();
               </tr>
             </thead>
             <tbody>
-              <?php while ($data = mysqli_fetch_assoc($dataQuery)): ?>
+              <?php 
+                $no = 1;
+                while ($data = mysqli_fetch_assoc($dataQuery)): 
+              ?>
                 <tr>
-                  <td><?= htmlspecialchars($data['id']) ?></td>
+                  <td><?= $no++; ?></td>
                   <td><?= htmlspecialchars($data['username']) ?></td>
                   <td><?= htmlspecialchars($data['nama']) ?></td>
                   <td><?= htmlspecialchars($data['email']) ?></td>
@@ -85,8 +93,8 @@ ob_start();
                   </td>
                   <td>
                     <a href="edit_pengguna.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> Edit</a>
-                    <a href="hapus_pengguna.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-danger"
-                      onclick="return confirm('Yakin ingin menghapus?')"><i class="fa fa-trash"></i> Hapus</a>
+                    <!-- <a href="hapus_pengguna.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-danger"
+                      onclick="return confirm('Yakin ingin menghapus?')"><i class="fa fa-trash"></i> Hapus</a> -->
                   </td>
                 </tr>
               <?php endwhile; ?>
