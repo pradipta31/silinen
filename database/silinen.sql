@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 13, 2025 at 08:01 AM
+-- Generation Time: Sep 13, 2025 at 07:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,9 +40,9 @@ CREATE TABLE `ruangan` (
 --
 
 INSERT INTO `ruangan` (`id`, `id_user`, `nama_ruangan`, `telp_ruangan`, `status`) VALUES
-(1, NULL, 'Ratna', '123456', 1),
-(2, NULL, 'Sandat', '123456', 1),
-(3, NULL, 'Anggrek', '123456', 1),
+(1, 2, 'Ratna', '0361123123', 1),
+(2, 5, 'Sandat', '123456', 1),
+(3, 6, 'Anggrek', '123456', 1),
 (4, NULL, 'Teratai', '123456', 1),
 (5, NULL, 'Dahlia', '123456', 1),
 (6, NULL, 'Ngurah Rai', '123456', 1),
@@ -63,19 +63,21 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `hak_akses` varchar(25) NOT NULL,
-  `status` int(11) NOT NULL
+  `status` int(11) NOT NULL,
+  `status_ruangan` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `nama`, `username`, `email`, `password`, `hak_akses`, `status`) VALUES
-(1, 'Admin Master', 'admin', 'admin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin', 1),
-(2, 'Ni Luh Gede Dama Yanti', 'damayanti', 'luhdedamayanti08@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin_ruangan', 1),
-(3, 'John Doe', 'johndoe', 'johndoe@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'petugas_laundry', 1),
-(4, 'Jane Doe', 'janedoe', 'janedoe@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'kepala_penanggung_jawab', 1),
-(5, 'John Daer', 'johndaer', 'johndae@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin_ruangan', 1);
+INSERT INTO `users` (`id`, `nama`, `username`, `email`, `password`, `hak_akses`, `status`, `status_ruangan`) VALUES
+(1, 'Admin Master', 'admin', 'admin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin', 1, NULL),
+(2, 'Ni Luh Gede Dama Yanti', 'damayanti', 'luhdedamayanti08@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin_ruangan', 1, 1),
+(3, 'John Doe', 'johndoe', 'johndoe@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'petugas_laundry', 1, NULL),
+(4, 'Jane Doe', 'janedoe', 'janedoe@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'kepala_penanggung_jawab', 1, NULL),
+(5, 'John Daer', 'johndaer', 'johndae@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin_ruangan', 1, 1),
+(6, 'I Gede Pradipta Adi Nugraha', 'pradipta31', 'pradiptadipta31@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin_ruangan', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -107,7 +109,7 @@ ALTER TABLE `ruangan`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
