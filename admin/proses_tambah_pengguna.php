@@ -53,3 +53,5 @@ if (isset($_POST['submit'])) {
         header("location: tambah_pengguna.php?pesan=error&detail=$pesan_error");
     }
 }
+
+?>

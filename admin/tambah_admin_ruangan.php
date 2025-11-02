@@ -98,17 +98,17 @@
                     <p>Berikut adalah daftar <b>Admin Ruangan</b> yang tersedia (status belum terdaftar di ruangan manapun):</p>
                     <ul class="list-group">
                         <?php
-                        // Query ulang untuk menampilkan daftar admin
-                        $query_admin_list = mysqli_query($koneksi, "SELECT * FROM users WHERE hak_akses = 'admin_ruangan' AND status_ruangan = 0");
-                        if(mysqli_num_rows($query_admin_list) > 0) {
-                            while($admin = mysqli_fetch_assoc($query_admin_list)) {
-                                echo '<li class="list-group-item">'.$admin['nama'].' ('.$admin['username'].')</li>';
+                            // Query ulang untuk menampilkan daftar admin
+                            $query_admin_list = mysqli_query($koneksi, "SELECT * FROM users WHERE hak_akses = 'admin_ruangan' AND status_ruangan = 0");
+                            if(mysqli_num_rows($query_admin_list) > 0) {
+                                while($admin = mysqli_fetch_assoc($query_admin_list)) {
+                                    echo '<li class="list-group-item">'.$admin['nama'].' ('.$admin['username'].')</li>';
+                                }
+                            } else {
+                                echo '<li class="list-group-item">Tidak ada admin ruangan yang tersedia. Silahkan tambahkan Pengguna dengan Hak Akses Admin Ruangan terlebih dahulu. Klik disini untuk menambahkan <b>Pengguna Baru</b>.
+                                    <a href="tambah_pengguna.php">Tambah Pengguna</a>
+                                </li>';
                             }
-                        } else {
-                            echo '<li class="list-group-item">Tidak ada admin ruangan yang tersedia. Silahkan tambahkan Pengguna dengan Hak Akses Admin Ruangan terlebih dahulu. Klik disini untuk menambahkan <b>Pengguna Baru</b>.
-                                <a href="tambah_pengguna.php">Tambah Pengguna</a>
-                            </li>';
-                        }
                         ?>
                     </ul>
                 </div>

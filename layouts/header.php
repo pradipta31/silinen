@@ -39,7 +39,7 @@
           }
         ?>
         <header class="main-header">
-            <a href="index2.html" class="logo">
+            <a href="#" class="logo">
                 <span class="logo-mini"><b>SI</b>L</span>
                 <span class="logo-lg"><b>SI</b>LINEN</span>
             </a>

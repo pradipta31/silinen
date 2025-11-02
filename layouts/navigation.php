@@ -39,14 +39,14 @@
                     <i class="fa fa-building"></i> <span>Ruangan</span>
                 </a>
             </li>
-            <li class="treeview">
+            <li class="treeview <?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>">
                 <a href="#">
                     <i class="fa fa-bed"></i> <span>Linen</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-plus"></i> Tambah Linen Baru</a></li>
-                    <li><a href="#"><i class="fa fa-arrow-circle-right"></i> Data Linen</a></li>
+                    <li class="<?= $_SESSION['active_menu'] == 'tambah_linen' ? 'active' : '' ?>"><a href="#"><i class="fa fa-plus"></i> Tambah Linen Baru</a></li>
+                    <li class="<?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>"><a href="../admin/data_linen.php"><i class="fa fa-arrow-circle-right"></i> Data Linen</a></li>
                 </ul>
             </li>
             <li class="header">REPORT</li>

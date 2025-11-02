@@ -1,31 +1,31 @@
 <?php
-session_start();
-include '../koneksi.php';
-$username = $_SESSION['username'];
-$query = mysqli_query($koneksi, "SELECT * FROM users WHERE username = '$username'");
-$row = mysqli_fetch_assoc($query);
-// Judul halaman dan Deskripsi Halaman
-$pageTitle = "Pengguna";
-$pageDesc = "Tambah Pengguna";
-$_SESSION['active_menu'] = 'pengguna';
+    session_start();
+    include '../koneksi.php';
+    $username = $_SESSION['username'];
+    $query = mysqli_query($koneksi, "SELECT * FROM users WHERE username = '$username'");
+    $row = mysqli_fetch_assoc($query);
+    // Judul halaman dan Deskripsi Halaman
+    $pageTitle = "Pengguna";
+    $pageDesc = "Tambah Pengguna";
+    $_SESSION['active_menu'] = 'pengguna';
 
-// Inline Javascript
-$inlineJS = '<script>
-    function simpanBtn(d){
-        d.disabled = true;
-        d.innerHTML = "<i class="fa fa-spinner fa-spin"></i>";
-    }
-    $("#password, #confirmation_password").on("keyup", function () {
-            if ($("#password").val() == $("#confirmation_password").val()) {
-                $("#message").html("Password match!").css("color", "green");
-            } else {
-                $("#message").html("Password not match!").css("color", "red");
-            }
-        });
+    // Inline Javascript
+    $inlineJS = '<script>
+        function simpanBtn(d){
+            d.disabled = true;
+            d.innerHTML = "<i class="fa fa-spinner fa-spin"></i>";
+        }
+        $("#password, #confirmation_password").on("keyup", function () {
+                if ($("#password").val() == $("#confirmation_password").val()) {
+                    $("#message").html("Password match!").css("color", "green");
+                } else {
+                    $("#message").html("Password not match!").css("color", "red");
+                }
+            });
 
-    </script>';
+        </script>';
 
-ob_start();
+    ob_start();
 ?>
 
 <section class="content">
