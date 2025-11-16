@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2025 at 04:31 AM
+-- Generation Time: Nov 06, 2025 at 02:44 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,6 +24,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `linen`
+--
+
+CREATE TABLE `linen` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_ruangan` int(11) NOT NULL,
+  `kode_linen` varchar(15) NOT NULL,
+  `nama_linen` varchar(199) NOT NULL,
+  `gambar` varchar(199) NOT NULL,
+  `jumlah_linen` int(11) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ruangan`
 --
 
@@ -40,8 +57,8 @@ CREATE TABLE `ruangan` (
 --
 
 INSERT INTO `ruangan` (`id`, `id_user`, `nama_ruangan`, `telp_ruangan`, `status`) VALUES
-(1, NULL, 'Ratna', '123456', 1),
-(2, NULL, 'Sandat', '123456', 1),
+(1, 2, 'Ratna', '123456', 1),
+(2, 7, 'Sandat', '123456', 1),
 (3, NULL, 'Anggrek', '123456', 1),
 (4, NULL, 'Teratai', '123456', 1),
 (5, NULL, 'Dahlia', '123456', 1),
@@ -76,13 +93,21 @@ INSERT INTO `users` (`id`, `nama`, `username`, `email`, `password`, `hak_akses`,
 (2, 'Ni Luh Gede Dama Yanti', 'damayanti', 'luhdedamayanti08@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin_ruangan', 1, 1),
 (3, 'John Doe', 'johndoe', 'johndoe@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'petugas_laundry', 1, NULL),
 (4, 'Jane Doe', 'janedoe', 'janedoe@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'kepala_penanggung_jawab', 1, NULL),
-(5, 'John Daer', 'johndaer', 'johndae@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin_ruangan', 1, 1),
-(6, 'I Gede Pradipta Adi Nugraha', 'pradipta31', 'pradiptadipta31@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin_ruangan', 1, 1),
-(7, 'Made Tika', 'tika12', 'tika@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'admin_ruangan', 1, 0);
+(5, 'John Daer', 'johndaer', 'johndae@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin_ruangan', 1, 0),
+(6, 'I Gede Pradipta Adi Nugraha', 'pradipta31', 'pradiptadipta31@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin_ruangan', 1, 0),
+(7, 'Made Tika', 'tika12', 'tika@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'admin_ruangan', 1, 1);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `linen`
+--
+ALTER TABLE `linen`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_user` (`id_user`),
+  ADD KEY `fk_id_ruangan` (`id_ruangan`);
 
 --
 -- Indexes for table `ruangan`
@@ -100,6 +125,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `linen`
+--
+ALTER TABLE `linen`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ruangan`

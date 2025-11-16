@@ -46,7 +46,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="<?= $_SESSION['active_menu'] == 'tambah_linen' ? 'active' : '' ?>"><a href="#"><i class="fa fa-plus"></i> Tambah Linen Baru</a></li>
-                    <li class="<?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>"><a href="../admin/data_linen.php"><i class="fa fa-arrow-circle-right"></i> Data Linen</a></li>
+                    <li class="<?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>"><a href="../admin/linen_ruangan.php"><i class="fa fa-arrow-circle-right"></i> Data Linen</a></li>
                 </ul>
             </li>
             <li class="header">REPORT</li>
