@@ -156,6 +156,7 @@ ob_start();
                             <?php endwhile; ?>
                         </tbody>
                     </table>
+                    
                     <?php else: ?>
                         <div class="alert alert-info">
                             <i class="fa fa-info-circle"></i> Belum ada Linen untuk Ruangan ini.
