@@ -33,14 +33,14 @@ $pageTitle = "Linen";
 $pageDesc = "Data Linen";
 $_SESSION['active_menu'] = 'linen';
 
-// Query untuk mengambil data jadwal laboratorium
+// Query untuk mengambil data Linen
 $dataQuery = mysqli_query($koneksi, "SELECT l.*, u.nama, r.nama_ruangan 
      FROM linen l 
      JOIN users u ON l.id_user = u.id
      JOIN ruangan r ON l.id_ruangan = r.id 
      WHERE l.id_ruangan = $id_ruangan");
 
-// Ambil info laboratorium
+// Ambil info Ruangan
 $ruanganQuery = mysqli_query($koneksi, "SELECT * FROM ruangan WHERE id = $id_ruangan");
 $ruanganData = mysqli_fetch_assoc($ruanganQuery);
 
@@ -65,7 +65,7 @@ ob_start();
             }
             ?>
             
-            <!-- Info Laboratorium -->
+            <!-- Info Ruangan -->
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Informasi Ruangan</h3>
@@ -151,10 +151,6 @@ ob_start();
                                         <a href="edit_linen.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning">
                                             <i class="fa fa-pencil"></i> Edit
                                         </a>
-                                        <!-- <a href="hapus_jadwal.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-danger"
-                                          onclick="return confirm('Yakin ingin menghapus jadwal ini?')">
-                                            <i class="fa fa-trash"></i> Hapus
-                                        </a> -->
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
