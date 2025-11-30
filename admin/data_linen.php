@@ -34,14 +34,15 @@ $pageDesc = "Data Linen";
 $_SESSION['active_menu'] = 'linen';
 
 // Query untuk mengambil data jadwal laboratorium
-$dataQuery = mysqli_query($koneksi, "SELECT l.*, u.nama 
-     FROM j_lab j 
-     JOIN users u ON j.id_user = u.id 
-     WHERE j.id_laboratorium = $id_laboratorium");
+$dataQuery = mysqli_query($koneksi, "SELECT l.*, u.nama, r.nama_ruangan 
+     FROM linen l 
+     JOIN users u ON l.id_user = u.id
+     JOIN ruangan r ON l.id_ruangan = r.id 
+     WHERE l.id_ruangan = $id_ruangan");
 
 // Ambil info laboratorium
-$labQuery = mysqli_query($koneksi, "SELECT * FROM laboratorium WHERE id = $id_laboratorium");
-$labData = mysqli_fetch_assoc($labQuery);
+$ruanganQuery = mysqli_query($koneksi, "SELECT * FROM ruangan WHERE id = $id_ruangan");
+$ruanganData = mysqli_fetch_assoc($ruanganQuery);
 
 ob_start();
 ?>
@@ -67,26 +68,22 @@ ob_start();
             <!-- Info Laboratorium -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Informasi Laboratorium</h3>
+                    <h3 class="box-title">Informasi Ruangan</h3>
                 </div>
                 <div class="box-body">
-                    <?php if($labData): ?>
+                    <?php if($ruanganData): ?>
                     <div class="row">
                         <div class="col-md-6">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" style="font-size: medium;">
                                 <tr>
-                                    <th width="30%">Kode Lab</th>
-                                    <td><?= htmlspecialchars($labData['kode_lab']) ?></td>
-                                </tr>
-                                <tr>
-                                    <th>Nama Lab</th>
-                                    <td><?= htmlspecialchars($labData['nama_lab']) ?></td>
+                                    <th>Nama Ruangan</th>
+                                    <td><?= htmlspecialchars($ruanganData['nama_ruangan']) ?></td>
                                 </tr>
                                 <tr>
                                     <th>Status</th>
                                     <td>
-                                        <span class="label <?= ($labData['status'] == 1) ? 'label-success' : 'label-danger' ?>">
-                                            <?= ($labData['status'] == 1) ? 'Aktif' : 'Nonaktif' ?>
+                                        <span class="label <?= ($ruanganData['status'] == 1) ? 'label-success' : 'label-danger' ?>">
+                                            <?= ($ruanganData['status'] == 1) ? 'Aktif' : 'Nonaktif' ?>
                                         </span>
                                     </td>
                                 </tr>
@@ -95,19 +92,19 @@ ob_start();
                     </div>
                     <?php else: ?>
                         <div class="alert alert-warning">
-                            <i class="fa fa-warning"></i> Data laboratorium tidak ditemukan!
+                            <i class="fa fa-warning"></i> Data ruangan tidak ditemukan!
                         </div>
                     <?php endif; ?>
                 </div>
             </div>
 
-            <!-- Jadwal Laboratorium -->
+            <!-- Daftar Linen -->
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Jadwal Laboratorium</h3>
+                    <h3 class="box-title">Daftar Linen</h3>
                     <div class="box-tools">
-                        <a href="tambah_jadwal.php?id_lab=<?= $id_laboratorium ?>" class="btn btn-primary btn-md"> 
-                            <i class="fa fa-plus"></i> Tambah Jadwal
+                        <a href="tambah_linen.php?id_ruangan=<?= $id_ruangan ?>" class="btn btn-primary btn-md"> 
+                            <i class="fa fa-plus"></i> Tambah Linen
                         </a>
                     </div>
                 </div>
@@ -117,11 +114,12 @@ ob_start();
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Admin</th>
-                                <th>Tanggal</th>
-                                <th>Sesi</th>
+                                <th>Admin Ruangan</th>
+                                <th>Kode Linen</th>
+                                <th>Nama Linen</th>
+                                <th>Gambar</th>
+                                <th>Jumlah Linen</th>
                                 <th>Status</th>
-                                <th>Jadwal</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>
@@ -129,17 +127,20 @@ ob_start();
                             <?php
                             $no = 1;
                             while ($data = mysqli_fetch_assoc($dataQuery)):
-                                // Format tanggal
-                                $tanggal = date('d-m-Y', strtotime($data['tanggal']));
                             ?>
                                 <tr>
                                     <td><?= $no++; ?></td>
                                     <td><?= $data['nama']; ?></td>
-                                    <td><?= $tanggal ?></td>
+                                    <td><?= $data['kode_linen'] ?></td>
+                                    <td><?= $data['nama_linen'] ?></td>
                                     <td>
                                         <span class="label <?= ($data['sesi'] == 'Pagi') ? 'label-primary' : 'label-success' ?>">
                                             <?= $data['sesi']; ?>
                                         </span>
+                                    </td>
+                                    
+                                    <td>
+                                        <?= $data['jumlah_linen'] ?>
                                     </td>
                                     <td>
                                         <span class="label <?= ($data['status'] == 1) ? 'label-success' : 'label-danger' ?>">
@@ -147,12 +148,7 @@ ob_start();
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="lihat_jadwal.php?id_jlab=<?= $data['id']; ?>" class="btn btn-primary">
-                                            <i class="fa fa-arrow-right"></i> Lihat Jadwal
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="edit_jadwal.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning">
+                                        <a href="edit_linen.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning">
                                             <i class="fa fa-pencil"></i> Edit
                                         </a>
                                         <!-- <a href="hapus_jadwal.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-danger"
@@ -166,7 +162,7 @@ ob_start();
                     </table>
                     <?php else: ?>
                         <div class="alert alert-info">
-                            <i class="fa fa-info-circle"></i> Belum ada jadwal untuk laboratorium ini.
+                            <i class="fa fa-info-circle"></i> Belum ada Linen untuk Ruangan ini.
                         </div>
                     <?php endif; ?>
                 </div>
@@ -174,8 +170,8 @@ ob_start();
 
             <!-- Tombol Kembali -->
             <div class="box-footer">
-                <a href="data_jadwal.php" class="btn btn-default">
-                    <i class="fa fa-arrow-left"></i> Kembali ke Daftar Laboratorium
+                <a href="linen_ruangan.php" class="btn btn-default">
+                    <i class="fa fa-arrow-left"></i> Kembali ke Daftar Ruangan
                 </a>
             </div>
         </div>
