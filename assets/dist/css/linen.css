@@ -1,0 +1,124 @@
+/* Style tambahan untuk tampilan gambar */
+.img-linen {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  border: 2px solid #ddd;
+}
+
+.img-linen:hover {
+  transform: scale(1.05);
+  border-color: #3c8dbc;
+}
+
+.no-image {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f4f4;
+  border-radius: 8px;
+  color: #999;
+  font-size: 12px;
+  border: 2px dashed #ddd;
+}
+
+.linen-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.linen-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.linen-info {
+  padding-left: 15px;
+}
+
+.badge-custom {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.date-badge {
+  background: #e3f2fd;
+  color: #1976d2;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  margin-left: 5px;
+}
+
+.card-view-btn {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px 15px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.card-view-btn:hover {
+  background: #e9ecef;
+  color: #333;
+}
+
+.card-view-btn.active {
+  background: #3c8dbc;
+  color: white;
+  border-color: #367fa9;
+}
+
+.table-view {
+  display: block;
+}
+
+.card-view {
+  display: none;
+}
+
+/* Style untuk grid view */
+.linen-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.linen-grid-item {
+  width: calc(33.333% - 15px);
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.linen-grid-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 992px) {
+  .linen-grid-item {
+    width: calc(50% - 15px);
+  }
+}
+
+@media (max-width: 576px) {
+  .linen-grid-item {
+    width: 100%;
+  }
+}

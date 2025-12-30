@@ -7,7 +7,7 @@ $row = mysqli_fetch_assoc($query);
 
 $pageTitle = "Data Jadwal";
 $pageDesc = "Data Jadwal";
-$_SESSION['active_menu'] = 'jadwal';
+$_SESSION['active_menu'] = 'linen';
 
 // CSS untuk calendar view
 $additionalCSS = [
@@ -22,16 +22,13 @@ $additionalJS = [
     '../assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'
 ];
 
-$q = mysqli_query($koneksi, "SELECT * FROM ruangan WHERE status = 1 ORDER BY nama_ruangan ASC");
+$q = mysqli_query($koneksi, "SELECT r.*, u.nama as admin_ruangan 
+                            FROM ruangan r 
+                            LEFT JOIN users u ON r.id_user = u.id");
 
 ob_start();
 ?>
 <section class="content">
-    <style>
-        .test{
-            color: ;
-        }
-    </style>
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -40,7 +37,7 @@ ob_start();
                     // Array untuk warna dan ikon yang berbeda
                     $colors = ['bg-aqua', 'bg-green', 'bg-yellow', 'bg-red', 'bg-purple', 'bg-maroon', 'bg-teal', 'bg-blue', 'bg-olive', 'bg-lime'];
                     $icons = ['fas fa-spa', 'fas fa-seedling', 'fas fa-heartbeat', 'fas fa-star', 'fas fa-procedures', 'fas fa-gem', 'fas fa-leaf', 'fas fa-water', 'fas fa-bed'];
-                    
+
                     $counter = 0;
                     while ($r = mysqli_fetch_assoc($q)) {
                         // Menggunakan modulo untuk mengulang warna dan ikon jika jumlah lab lebih banyak dari array
@@ -51,12 +48,26 @@ ob_start();
                             <div class="small-box <?= $colorClass ?>">
                                 <div class="inner">
                                     <h3><?= $r['nama_ruangan']; ?></h3>
-                                    <p><?= $r['telp_ruangan']; ?></p>
+                                    <p><?php 
+                                        if ($r['admin_ruangan'] != 0) {
+                                            echo $r['admin_ruangan']; 
+                                        }else{
+                                            echo "-";
+                                        }
+                                        ?></p>
                                 </div>
                                 <div class="icon">
                                     <i class="<?= $iconClass ?>"></i>
                                 </div>
+                                <?php
+                                    if($r['admin_ruangan'] != 0){
+                                ?>
                                 <a href="data_linen.php?id_ruangan=<?= $r['id']; ?>" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-circle-right"></i></a>
+                                <?php
+                                    }else{
+
+                                    }
+                                ?>
                             </div>
                         </div>
                     <?php
