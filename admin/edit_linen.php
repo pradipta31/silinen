@@ -354,7 +354,7 @@ ob_start();
                     <div class="box-footer" style="background: #f9f9f9; padding: 15px; border-radius: 5px;">
                         <div class="row">
                             <div class="col-md-6">
-                                <a href="data_linen.php?id_ruangan=<?= $id_ruangan ?>" class="btn btn-default">
+                                <a href="data_linen.php" class="btn btn-default">
                                     <i class="fa fa-arrow-left"></i> Kembali
                                 </a>
                             </div>

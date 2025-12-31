@@ -39,19 +39,25 @@
                     <i class="fa fa-building"></i> <span>Ruangan</span>
                 </a>
             </li>
-            <li class="<?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>">
+            <!-- <li class="<?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>">
                 <a href="../admin/data_linen.php">
                     <i class="fa fa-bed"></i> <span>Linen</span>
                 </a>
+            </li> -->
+            <li class="treeview <?= in_array($_SESSION['active_menu'], ['linen', 'bersih', 'kotor']) ? 'active' : '' ?>">
+                <a href="#">
+                    <i class="fa fa-bed"></i> <span>Linen</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="<?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>"><a href="data_linen.php"><i class="fa fa-list"></i> Daftar Linen</a></li>
+                    <li class="<?= $_SESSION['active_menu'] == 'bersih' ? 'active' : '' ?>"><a href="data_linen_bersih.php"><i class="fa fa-check-circle"></i> Linen Bersih</a></li>
+                    <li class="<?= $_SESSION['active_menu'] == 'kotor' ? 'active' : '' ?>"><a href="data_linen_kotor.php"><i class="fa fa-exclamation-circle"></i> Linen Kotor</a></li>
+                </ul>
             </li>
             <li class="<?= $_SESSION['active_menu'] == 'distribusi' ? 'active' : '' ?>">
                 <a href="../admin/data_distribusi_laundry.php">
-                    <i class="fa fa-tint"></i> <span>Distribusi Laundry</span>
-                </a>
-            </li>
-            <li class="<?= $_SESSION['active_menu'] == 'kotor' ? 'active' : '' ?>">
-                <a href="../admin/data_linen_kotor.php">
-                    <i class="fa fa-exclamation-circle"></i> <span>Linen Kotor</span>
+                    <i class="fa fa-shopping-cart"></i> <span>Distribusi Laundry</span>
                 </a>
             </li>
             <li class="header">REPORT</li>
