@@ -49,6 +49,11 @@
                     <i class="fa fa-tint"></i> <span>Distribusi Laundry</span>
                 </a>
             </li>
+            <li class="<?= $_SESSION['active_menu'] == 'kotor' ? 'active' : '' ?>">
+                <a href="../admin/data_linen_kotor.php">
+                    <i class="fa fa-exclamation-circle"></i> <span>Linen Kotor</span>
+                </a>
+            </li>
             <li class="header">REPORT</li>
             <li><a href="#"><i class="fa fa-book"></i> <span>Laporan</span></a></li>
         </ul>

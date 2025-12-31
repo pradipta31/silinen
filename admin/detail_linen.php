@@ -136,6 +136,7 @@ ob_start();
                                             <tr>
                                                 <th>No</th>
                                                 <th>Ruangan</th>
+                                                <th>Linen</th>
                                                 <th>Linen Terpakai</th>
                                                 <th>Linen Cadangan</th>
                                             </tr>
@@ -152,6 +153,7 @@ ob_start();
                                                 <tr>
                                                     <td><?= $no++; ?></td>
                                                     <td><?= $rLR['nama_ruangan']; ?></td>
+                                                    <td><?= $rLR['nama_linen']; ?></td>
                                                     <td><?= $rLR['linen_terpakai']; ?> pcs</td>
                                                     <td><?= $rLR['linen_cadangan']; ?> pcs</td>
                                                 </tr>
@@ -159,7 +161,7 @@ ob_start();
 
                                             <!-- Baris Total -->
                                             <tr style="background-color: #f5f5f5; font-weight: bold;">
-                                                <td colspan="2" align="right">TOTAL:</td>
+                                                <td colspan="3" align="center">TOTAL:</td>
                                                 <td><?= $total_terpakai; ?> pcs</td>
                                                 <td><?= $total_cadangan; ?> pcs</td>
                                             </tr>

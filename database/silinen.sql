@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2025 at 09:14 AM
+-- Generation Time: Dec 31, 2025 at 07:21 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,6 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `distribusi_linen`
+--
+
+CREATE TABLE `distribusi_linen` (
+  `id` int(11) NOT NULL,
+  `id_linen_ruangan` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `distribusi_linen`
+--
+
+INSERT INTO `distribusi_linen` (`id`, `id_linen_ruangan`, `jumlah`, `status`) VALUES
+(1, 1, 1, 1),
+(2, 1, 3, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `linen`
 --
 
@@ -33,6 +54,7 @@ CREATE TABLE `linen` (
   `nama_linen` varchar(199) NOT NULL,
   `gambar` varchar(199) NOT NULL,
   `jumlah_linen` int(11) NOT NULL,
+  `sisa_linen` int(11) NOT NULL,
   `tanggal` datetime NOT NULL,
   `status` int(11) NOT NULL,
   `updated_at` datetime NOT NULL
@@ -42,9 +64,10 @@ CREATE TABLE `linen` (
 -- Dumping data for table `linen`
 --
 
-INSERT INTO `linen` (`id`, `kode_linen`, `nama_linen`, `gambar`, `jumlah_linen`, `tanggal`, `status`, `updated_at`) VALUES
-(1, 'L001', 'Bantal', '1764771047_693044e79c82d.jpg', 10, '2025-12-03 14:18:51', 1, '2025-12-03 15:10:47'),
-(2, 'L002', 'Selimut', '1764768540_69303b1c4fee6.jpg', 10, '2025-12-03 14:29:00', 1, '2025-12-06 08:45:42');
+INSERT INTO `linen` (`id`, `kode_linen`, `nama_linen`, `gambar`, `jumlah_linen`, `sisa_linen`, `tanggal`, `status`, `updated_at`) VALUES
+(1, 'L001', 'Bantal', '1764771047_693044e79c82d.jpg', 10, 1, '2025-12-03 14:18:51', 1, '2025-12-03 15:10:47'),
+(2, 'L002', 'Selimut', '1764768540_69303b1c4fee6.jpg', 10, 5, '2025-12-03 14:29:00', 1, '2025-12-06 08:45:42'),
+(3, 'L003', 'Gorden', '1767099689_6953cd292d26e.jpg', 25, 0, '2025-12-30 14:01:29', 1, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -57,10 +80,22 @@ CREATE TABLE `linen_ruangan` (
   `id_user` int(11) NOT NULL,
   `id_ruangan` int(11) NOT NULL,
   `id_linen` int(11) NOT NULL,
-  `jumlah_linen` int(11) NOT NULL,
+  `linen_terpakai` int(11) NOT NULL,
   `linen_cadangan` int(11) NOT NULL,
   `status_linen` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `linen_ruangan`
+--
+
+INSERT INTO `linen_ruangan` (`id`, `id_user`, `id_ruangan`, `id_linen`, `linen_terpakai`, `linen_cadangan`, `status_linen`) VALUES
+(1, 2, 1, 3, 6, 0, 0),
+(2, 7, 2, 3, 5, 5, 0),
+(3, 8, 3, 3, 4, 1, 0),
+(4, 2, 1, 2, 5, 0, 0),
+(5, 8, 3, 1, 6, 1, 0),
+(6, 2, 1, 1, 2, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -127,6 +162,13 @@ INSERT INTO `users` (`id`, `nama`, `username`, `email`, `password`, `hak_akses`,
 --
 
 --
+-- Indexes for table `distribusi_linen`
+--
+ALTER TABLE `distribusi_linen`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_linen_ruangan` (`id_linen_ruangan`);
+
+--
 -- Indexes for table `linen`
 --
 ALTER TABLE `linen`
@@ -159,10 +201,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `distribusi_linen`
+--
+ALTER TABLE `distribusi_linen`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `linen`
 --
 ALTER TABLE `linen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `linen_ruangan`
+--
+ALTER TABLE `linen_ruangan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `ruangan`

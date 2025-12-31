@@ -105,88 +105,18 @@ ob_start();
                                     <td><?= htmlspecialchars($data['total_cadangan']) ?> Pcs</td>
                                     <td>
                                         <?php if (!empty($data['admin_ruangan'])): ?>
-                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                                                data-target="#modalDistribusi<?= $data['id'] ?>">
-                                                Distribusi <i class="fa fa-arrow-right"></i>
-                                            </button>
+                                            <a href="detail_distribusi_laundry.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-primary" title="Edit">
+                                                <i class="fa fa-eye"></i> Detail
+                                            </a>
                                         <?php else: ?>
-                                            <button class="btn btn-sm btn-primary" disabled>Distribusi <i class="fa fa-arrow-right"></i></button>
+                                            <button class="btn btn-sm btn-primary" disabled>Detail <i class="fa fa-eye"></i></button>
                                         <?php endif; ?>
                                         <!-- <a href="hapus_pengguna.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-danger"
                       onclick="return confirm('Yakin ingin menghapus?')"><i class="fa fa-trash"></i> Hapus</a> -->
                                     </td>
                                 </tr>
 
-                                <!-- MODAL -->
-                                <div class="modal fade" id="modalDistribusi<?= $data['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="modalDistribusiLabel<?= $data['id'] ?>">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                                <h4 class="modal-title" id="modalDistribusiLabel<?= $data['id'] ?>">Distribusi Linen ke Ruang <b><?= htmlspecialchars($data['nama_ruangan']) ?></b></h4>
-                                            </div>
-                                            <form id="formDistribusi<?= $data['id'] ?>" action="proses_distribusi_linen.php" method="POST">
-                                                <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <label for="ruangan_nama<?= $data['id'] ?>">Ruangan Tujuan</label>
-                                                        <input type="text" class="form-control" id="ruangan_nama<?= $data['id'] ?>"
-                                                            value="<?= htmlspecialchars($data['nama_ruangan']) ?>" readonly>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="nama_linen<?= $data['id'] ?>">Nama Linen</label>
-                                                        <input type="text" class="form-control" id="nama_linen<?= $data['id'] ?>"
-                                                            value="<?= htmlspecialchars($linenData['nama_linen'] ?? '') ?>" readonly>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="kode_linen<?= $data['id'] ?>">Kode Linen</label>
-                                                        <input type="text" class="form-control" id="kode_linen<?= $data['id'] ?>"
-                                                            value="<?= htmlspecialchars($linenData['kode_linen'] ?? '') ?>" readonly>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="linen_terpakai<?= $data['id'] ?>">Linen Terpakai</label>
-                                                        <input type="number" class="form-control" id="linen_terpakai<?= $data['id'] ?>"
-                                                            name="linen_terpakai" min="1" max="<?= htmlspecialchars($linenData['sisa_linen'] ?? 0) ?>" required
-                                                            oninput="hitungSisaLinen(<?= $data['id'] ?>)">
-                                                        <small class="text-muted">Sisa linen tersedia: <?= htmlspecialchars($linenData['sisa_linen'] ?? 0) ?> Pcs</small>
-                                                        <!-- Kalkulasi untuk linen terpakai -->
-                                                        <div id="kalkulasi-terpakai-<?= $data['id'] ?>" class="text-info" style="margin-top: 5px; font-size: 12px;">
-                                                            Sisa setelah terpakai: <?= htmlspecialchars($linenData['sisa_linen'] ?? 0) ?> Pcs
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="linen_cadangan<?= $data['id'] ?>">Linen Cadangan</label>
-                                                        <input type="number" class="form-control" id="linen_cadangan<?= $data['id'] ?>"
-                                                            name="linen_cadangan" min="1" max="<?= htmlspecialchars($linenData['sisa_linen'] ?? 0) ?>" required
-                                                            oninput="hitungSisaLinen(<?= $data['id'] ?>)">
-                                                        <small class="text-muted">Sisa linen tersedia: <?= htmlspecialchars($linenData['sisa_linen'] ?? 0) ?> Pcs</small>
-                                                    </div>
-
-                                                    <!-- Info total distribusi -->
-                                                    <div class="alert alert-info" id="total-distribusi-<?= $data['id'] ?>" style="margin-top: 10px; padding: 10px;">
-                                                        <strong>Total Distribusi:</strong> 0 Pcs<br>
-                                                        <strong>Sisa Akhir:</strong> <?= htmlspecialchars($linenData['sisa_linen'] ?? 0) ?> Pcs
-                                                    </div>
-
-                                                    <!-- Hidden Inputs -->
-                                                    <input type="hidden" id="id_user<?= $data['id'] ?>" name="id_user" value="<?= $data['id_user'] ?>">
-                                                    <input type="hidden" id="id_ruangan<?= $data['id'] ?>" name="id_ruangan" value="<?= $data['id'] ?>">
-                                                    <input type="hidden" id="id_linen<?= $data['id'] ?>" name="id_linen" value="<?= $id_linen ?>">
-                                                    <input type="hidden" name="max_sisa" value="<?= htmlspecialchars($linenData['sisa_linen'] ?? 0) ?>">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                                                    <button type="submit" id="submitBtn-<?= $data['id'] ?>" name="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan Distribusi</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             <?php endwhile; ?>
                         </tbody>
                     </table>
