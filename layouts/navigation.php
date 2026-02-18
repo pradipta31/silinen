@@ -39,19 +39,20 @@
                     <i class="fa fa-building"></i> <span>Ruangan</span>
                 </a>
             </li>
-            <li class="<?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>">
-                <a href="../admin/data_linen.php">
+            <li class="treeview <?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>">
+                <a href="#">
                     <i class="fa fa-bed"></i> <span>Linen</span>
+                    <i class="fa fa-angle-left pull-right"></i>
                 </a>
+                <ul class="treeview-menu">
+                    <li><a href="../admin/data_linen.php"><i class="fa fa-bed"></i> Data Linen</a></li>
+                    <li><a href="../admin/linen_bersih.php"><i class="fa fa-check-circle"></i> Linen Bersih</a></li>
+                    <li><a href="../admin/linen_kotor.php"><i class="fa fa-exclamation-circle"></i> Linen Kotor</a></li>
+                </ul>
             </li>
             <li class="<?= $_SESSION['active_menu'] == 'distribusi' ? 'active' : '' ?>">
                 <a href="../admin/data_distribusi_laundry.php">
                     <i class="fa fa-tint"></i> <span>Distribusi Laundry</span>
-                </a>
-            </li>
-            <li class="<?= $_SESSION['active_menu'] == 'kotor' ? 'active' : '' ?>">
-                <a href="../admin/data_linen_kotor.php">
-                    <i class="fa fa-exclamation-circle"></i> <span>Linen Kotor</span>
                 </a>
             </li>
             <li class="header">REPORT</li>

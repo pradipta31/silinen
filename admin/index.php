@@ -18,53 +18,147 @@
             <strong>Login Berhasil!</strong> Selamat datang '.$row['username'].' anda berhasil melakukan login pada aplikasi SILINEN!
         </div>';
     ?>
+    
     <div class="row">
+        <?php
+        // 1. Jumlah Linen (Total dari tabel linen, kolom jumlah_linen)
+        $query_jumlah = mysqli_query($koneksi, "SELECT SUM(jumlah_linen) as total_jumlah FROM linen");
+        $data_jumlah = mysqli_fetch_assoc($query_jumlah);
+        $total_jumlah_linen = $data_jumlah['total_jumlah'] ?? 0;
+        
+        // 2. Jumlah Linen Terpakai (Total dari tabel linen_ruangan, kolom linen_terpakai)
+        $query_terpakai = mysqli_query($koneksi, "SELECT SUM(linen_terpakai) as total_terpakai FROM linen_ruangan");
+        $data_terpakai = mysqli_fetch_assoc($query_terpakai);
+        $total_linen_terpakai = $data_terpakai['total_terpakai'] ?? 0;
+        
+        // 3. Jumlah Linen Bersih (Total dari tabel linen, kolom sisa_linen)
+        $query_bersih = mysqli_query($koneksi, "SELECT SUM(sisa_linen) as total_bersih FROM linen");
+        $data_bersih = mysqli_fetch_assoc($query_bersih);
+        $total_linen_bersih = $data_bersih['total_bersih'] ?? 0;
+        
+        // 4. Jumlah Linen Kotor (Total Linen - (Linen Terpakai + Linen Bersih))
+        $total_linen_kotor = $total_jumlah_linen - ($total_linen_terpakai + $total_linen_bersih);
+        if ($total_linen_kotor < 0) $total_linen_kotor = 0;
+        
+        // 5. Persentase Linen Terpakai
+        $persentase_terpakai = ($total_jumlah_linen > 0) ? round(($total_linen_terpakai / $total_jumlah_linen) * 100, 1) : 0;
+        ?>
+        
+        <!-- Card 1: Jumlah Linen Total -->
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3>150</h3>
-                    <p>New Orders</p>
+                    <h3><?php echo number_format($total_jumlah_linen); ?></h3>
+                    <p>Jumlah Linen</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-bag"></i>
+                    <i class="fa fa-sort-numeric-asc"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="data_linen.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        
+        <!-- Card 2: Jumlah Linen Terpakai -->
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-                    <p>Bounce Rate</p>
+                    <h3><?php echo number_format($total_linen_terpakai); ?><sup style="font-size: 20px"> (<?php echo $persentase_terpakai; ?>%)</sup></h3>
+                    <p>Jumlah Linen Terpakai</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
+                    <i class="fa fa-bed"></i>
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        
+        <!-- Card 3: Jumlah Linen Bersih -->
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>44</h3>
-                    <p>User Registrations</p>
+                    <h3><?php echo number_format($total_linen_bersih); ?></h3>
+                    <p>Jumlah Linen Bersih</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-person-add"></i>
+                    <i class="fa fa-tint"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="linen.php?status=bersih" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        
+        <!-- Card 4: Jumlah Linen Kotor -->
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-red">
                 <div class="inner">
-                    <h3>65</h3>
-                    <p>Unique Visitors</p>
+                    <h3><?php echo number_format($total_linen_kotor); ?></h3>
+                    <p>Jumlah Linen Kotor</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
+                    <i class="fa fa-exclamation-circle"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="linen.php?status=kotor" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tambahan: Ringkasan Statistik -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">📊 Ringkasan Statistik Linen</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="progress-group">
+                                <span class="progress-text">Linen Terpakai</span>
+                                <span class="progress-number"><b><?php echo $total_linen_terpakai; ?></b>/<?php echo $total_jumlah_linen; ?></span>
+                                <div class="progress sm">
+                                    <div class="progress-bar progress-bar-green" style="width: <?php echo $persentase_terpakai; ?>%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="progress-group">
+                                <span class="progress-text">Linen Bersih</span>
+                                <span class="progress-number"><b><?php echo $total_linen_bersih; ?></b>/<?php echo $total_jumlah_linen; ?></span>
+                                <div class="progress sm">
+                                    <?php 
+                                    $persentase_bersih = ($total_jumlah_linen > 0) ? round(($total_linen_bersih / $total_jumlah_linen) * 100, 1) : 0;
+                                    ?>
+                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo $persentase_bersih; ?>%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="progress-group">
+                                <span class="progress-text">Linen Kotor</span>
+                                <span class="progress-number"><b><?php echo $total_linen_kotor; ?></b>/<?php echo $total_jumlah_linen; ?></span>
+                                <div class="progress sm">
+                                    <?php 
+                                    $persentase_kotor = ($total_jumlah_linen > 0) ? round(($total_linen_kotor / $total_jumlah_linen) * 100, 1) : 0;
+                                    ?>
+                                    <div class="progress-bar progress-bar-red" style="width: <?php echo $persentase_kotor; ?>%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="info-box bg-green">
+                                <span class="info-box-icon"><i class="fa fa-bed"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Terpakai</span>
+                                    <span class="info-box-number"><?php echo $total_linen_terpakai; ?></span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: <?php echo $persentase_terpakai; ?>%"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        <?php echo $persentase_terpakai; ?>% dari total linen
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

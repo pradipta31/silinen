@@ -92,9 +92,9 @@ ob_start();
                                         <th>Kode Linen</th>
                                         <th>Nama Linen</th>
                                         <th width="100">Jumlah</th>
-                                        <th>Sisa Linen</th>
+                                        <th>Linen Tersedia</th>
                                         <th width="120">Tanggal Masuk</th>
-                                        <th width="80">Status</th>
+                                        <!-- <th width="80">Status</th> -->
                                         <th width="100">Opsi</th>
                                     </tr>
                                 </thead>
@@ -131,12 +131,12 @@ ob_start();
                                             </td>
                                             <td class="text-center">
                                                 <span class="badge badge-custom" style="background: #e8f5e8; color: #2e7d32; font-size: 14px;">
-                                                    <i class="fa fa-hashtag"></i> <?= $data['jumlah_linen'] ?>
+                                                    <i class="fa fa-hashtag"></i> <?= $data['jumlah_linen'] ?> pcs
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <span class="badge badge-custom" style="background: #f5e8e8ff; color: #b83434ff; font-size: 14px;">
-                                                    <i class="fa fa-hashtag"></i> <?= $data['sisa_linen'] ?>
+                                                <span class="badge badge-custom" style="background: #f5e8e8ff; color: rgb(184, 120, 52); font-size: 14px;">
+                                                    <i class="fa fa-hashtag"></i> <?= $data['sisa_linen'] ?> pcs
                                                 </span>
                                             </td>
                                             <td>
@@ -146,11 +146,11 @@ ob_start();
                                                     <small><i class="fa fa-clock-o"></i> <?= $waktu_masuk ?></small>
                                                 </span>
                                             </td>
-                                            <td class="text-center">
+                                            <!-- <td class="text-center">
                                                 <span class="label <?= ($data['status'] == 1) ? 'label-success' : 'label-danger' ?>">
                                                     <?= ($data['status'] == 1) ? 'Aktif' : 'Nonaktif' ?>
                                                 </span>
-                                            </td>
+                                            </td> -->
                                             <td>
                                                 <div class="btn-group">
                                                     <a href="edit_linen.php?id=<?= $data['id'] ?>" class="btn btn-xs btn-warning" title="Edit">

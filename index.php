@@ -13,7 +13,12 @@
     <link rel="stylesheet" href="assets/plugins/iCheck/square/blue.css">
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="
+    background: 
+        linear-gradient(rgba(132, 126, 126, 0.8), rgba(132, 126, 126, 0.8)),
+        url('images/background.jpeg') no-repeat center center fixed;
+    background-size: cover;
+">
     <div class="login-box">
         
         <?php 
@@ -36,10 +41,11 @@
                 }
             }
         ?>
-        <div class="login-logo">
-            <a href="index.php"><b>SILINEN</b>Login</a>
-        </div>
+        
         <div class="login-box-body">
+            <center>
+                <img src="images/logo.png" alt="" srcset="" width="50%">
+            </center>
             <p class="login-box-msg">Silahkan melakukan Login terlebih dahulu</p>
             <form action="proses-login.php" method="post">
                 <div class="form-group has-feedback">

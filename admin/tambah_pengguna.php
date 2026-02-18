@@ -11,19 +11,14 @@
 
     // Inline Javascript
     $inlineJS = '<script>
-        function simpanBtn(d){
-            d.disabled = true;
-            d.innerHTML = "<i class="fa fa-spinner fa-spin"></i>";
-        }
         $("#password, #confirmation_password").on("keyup", function () {
-                if ($("#password").val() == $("#confirmation_password").val()) {
-                    $("#message").html("Password match!").css("color", "green");
-                } else {
-                    $("#message").html("Password not match!").css("color", "red");
-                }
-            });
-
-        </script>';
+            if ($("#password").val() == $("#confirmation_password").val()) {
+                $("#message").html("Password match!").css("color", "green");
+            } else {
+                $("#message").html("Password not match!").css("color", "red");
+            }
+        });
+    </script>';
 
     ob_start();
 ?>
