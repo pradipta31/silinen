@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 31, 2025 at 07:21 AM
+-- Generation Time: Dec 31, 2025 at 12:10 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,6 +31,8 @@ CREATE TABLE `distribusi_linen` (
   `id` int(11) NOT NULL,
   `id_linen_ruangan` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
+  `tanggal_masuk` date NOT NULL,
+  `tanggal_selesai` date DEFAULT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -38,9 +40,12 @@ CREATE TABLE `distribusi_linen` (
 -- Dumping data for table `distribusi_linen`
 --
 
-INSERT INTO `distribusi_linen` (`id`, `id_linen_ruangan`, `jumlah`, `status`) VALUES
-(1, 1, 1, 1),
-(2, 1, 3, 1);
+INSERT INTO `distribusi_linen` (`id`, `id_linen_ruangan`, `jumlah`, `tanggal_masuk`, `tanggal_selesai`, `status`) VALUES
+(1, 1, 1, '2025-12-31', NULL, 3),
+(2, 1, 3, '2025-12-31', NULL, 3),
+(3, 2, 2, '2025-12-30', NULL, 2),
+(4, 5, 2, '2025-12-04', NULL, 2),
+(5, 7, 2, '2025-11-27', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -66,7 +71,7 @@ CREATE TABLE `linen` (
 
 INSERT INTO `linen` (`id`, `kode_linen`, `nama_linen`, `gambar`, `jumlah_linen`, `sisa_linen`, `tanggal`, `status`, `updated_at`) VALUES
 (1, 'L001', 'Bantal', '1764771047_693044e79c82d.jpg', 10, 1, '2025-12-03 14:18:51', 1, '2025-12-03 15:10:47'),
-(2, 'L002', 'Selimut', '1764768540_69303b1c4fee6.jpg', 10, 5, '2025-12-03 14:29:00', 1, '2025-12-06 08:45:42'),
+(2, 'L002', 'Selimut', '1764768540_69303b1c4fee6.jpg', 10, 2, '2025-12-03 14:29:00', 1, '2025-12-06 08:45:42'),
 (3, 'L003', 'Gorden', '1767099689_6953cd292d26e.jpg', 25, 0, '2025-12-30 14:01:29', 1, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
@@ -91,11 +96,12 @@ CREATE TABLE `linen_ruangan` (
 
 INSERT INTO `linen_ruangan` (`id`, `id_user`, `id_ruangan`, `id_linen`, `linen_terpakai`, `linen_cadangan`, `status_linen`) VALUES
 (1, 2, 1, 3, 6, 0, 0),
-(2, 7, 2, 3, 5, 5, 0),
+(2, 7, 2, 3, 3, 5, 0),
 (3, 8, 3, 3, 4, 1, 0),
 (4, 2, 1, 2, 5, 0, 0),
-(5, 8, 3, 1, 6, 1, 0),
-(6, 2, 1, 1, 2, 0, 0);
+(5, 8, 3, 1, 4, 1, 0),
+(6, 2, 1, 1, 2, 0, 0),
+(7, 8, 3, 2, 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -204,7 +210,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `distribusi_linen`
 --
 ALTER TABLE `distribusi_linen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `linen`
@@ -216,7 +222,7 @@ ALTER TABLE `linen`
 -- AUTO_INCREMENT for table `linen_ruangan`
 --
 ALTER TABLE `linen_ruangan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `ruangan`

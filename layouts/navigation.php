@@ -39,20 +39,42 @@
                     <i class="fa fa-building"></i> <span>Ruangan</span>
                 </a>
             </li>
+<<<<<<< HEAD
             <li class="treeview <?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>">
+                <a href="#">
+=======
+            <!-- <li class="<?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>">
+                <a href="../admin/data_linen.php">
+>>>>>>> f9c0bce815027f2d6e4fb8b07706993949d64002
+                    <i class="fa fa-bed"></i> <span>Linen</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+<<<<<<< HEAD
+                <ul class="treeview-menu">
+                    <li><a href="../admin/data_linen.php"><i class="fa fa-bed"></i> Data Linen</a></li>
+                    <li><a href="../admin/linen_bersih.php"><i class="fa fa-check-circle"></i> Linen Bersih</a></li>
+                    <li><a href="../admin/linen_kotor.php"><i class="fa fa-exclamation-circle"></i> Linen Kotor</a></li>
+=======
+            </li> -->
+            <li class="treeview <?= in_array($_SESSION['active_menu'], ['linen', 'bersih', 'kotor']) ? 'active' : '' ?>">
                 <a href="#">
                     <i class="fa fa-bed"></i> <span>Linen</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="../admin/data_linen.php"><i class="fa fa-bed"></i> Data Linen</a></li>
-                    <li><a href="../admin/linen_bersih.php"><i class="fa fa-check-circle"></i> Linen Bersih</a></li>
-                    <li><a href="../admin/linen_kotor.php"><i class="fa fa-exclamation-circle"></i> Linen Kotor</a></li>
+                    <li class="<?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>"><a href="data_linen.php"><i class="fa fa-list"></i> Daftar Linen</a></li>
+                    <li class="<?= $_SESSION['active_menu'] == 'bersih' ? 'active' : '' ?>"><a href="data_linen_bersih.php"><i class="fa fa-check-circle"></i> Linen Bersih</a></li>
+                    <li class="<?= $_SESSION['active_menu'] == 'kotor' ? 'active' : '' ?>"><a href="data_linen_kotor.php"><i class="fa fa-exclamation-circle"></i> Linen Kotor</a></li>
+>>>>>>> f9c0bce815027f2d6e4fb8b07706993949d64002
                 </ul>
             </li>
             <li class="<?= $_SESSION['active_menu'] == 'distribusi' ? 'active' : '' ?>">
                 <a href="../admin/data_distribusi_laundry.php">
+<<<<<<< HEAD
                     <i class="fa fa-tint"></i> <span>Distribusi Laundry</span>
+=======
+                    <i class="fa fa-shopping-cart"></i> <span>Distribusi Laundry</span>
+>>>>>>> f9c0bce815027f2d6e4fb8b07706993949d64002
                 </a>
             </li>
             <li class="header">REPORT</li>
