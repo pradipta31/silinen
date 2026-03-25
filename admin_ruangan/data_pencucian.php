@@ -85,7 +85,6 @@ ob_start();
                                 <th>Tanggal Pengajuan</th>
                                 <th>Keterangan</th>
                                 <th>Status</th>
-                                <th>Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -115,18 +114,6 @@ ob_start();
                                     <td class="text-center">
                                         <?= ($data['status'] == 1) ? '<span class="label label-warning"><i class="fa fa-clock-o"></i> Pengambilan</span>' : (($data['status'] == 2) ? '<span class="label label-primary"><i class="fa fa-truck"></i> Pencucian</span>' : (($data['status'] == 3) ? '<span class="label label-success"><i class="fa fa-check-circle"></i> Selesai</span>' :
                                             '<span class="label label-default">Unknown</span>')) ?>
-                                    </td>
-                                    <td>
-                                        <?php if ($data['status'] == 2): ?>
-                                            <a href="#" class="btn btn-sm btn-success"
-                                                onclick="konfirmasi(<?= $data['id'] ?>)">
-                                                <i class="fa fa-check-circle"></i> Konfirmasi
-                                            </a>
-                                        <?php else: ?>
-                                            <button class="btn btn-sm btn-success" disabled style="opacity: 0.5; cursor: not-allowed;">
-                                                <i class="fa fa-check-circle"></i> Konfirmasi
-                                            </button>
-                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>

@@ -90,7 +90,7 @@ ob_start();
                                 while ($linen = mysqli_fetch_assoc($query_linen)):
                                 ?>
                                     <option value="<?= $linen['id'] ?>">
-                                        <?= $linen['kode_linen'] ?> - <?= $linen['nama_linen'] ?> (Stok Tersedia: <?= $linen['jumlah'] ?> pcs)
+                                        <?= $linen['kode_linen'] ?> - <?= $linen['nama_linen'] ?> (Stok Tersedia: <?= $linen['jumlah_linen'] ?> pcs)
                                     </option>
                                 <?php endwhile; ?>
                             </select>

@@ -118,9 +118,18 @@ ob_start();
                                                 onclick="konfirmasi(<?= $data['id'] ?>)">
                                                 <i class="fa fa-check-circle"></i> Konfirmasi
                                             </a>
-                                        <?php else: ?>
+                                        <?php elseif ($data['status'] == 2): ?>
+                                            <a href="#" class="btn btn-sm btn-primary"
+                                                onclick="selesai(<?= $data['id'] ?>)">
+                                                <i class="fa fa-check-circle"></i> Selesai
+                                            </a>
+                                        <?php elseif ($data['status'] == 3): ?>
                                             <button class="btn btn-sm btn-success" disabled style="opacity: 0.5; cursor: not-allowed;">
-                                                <i class="fa fa-check-circle"></i> Konfirmasi
+                                                <i class="fa fa-check-circle"></i> Selesai
+                                            </button>
+                                        <?php else: ?>
+                                            <button class="btn btn-sm btn-default" disabled>
+                                                <i class="fa fa-question-circle"></i> Unknown
                                             </button>
                                         <?php endif; ?>
                                     </td>
@@ -148,7 +157,24 @@ ob_start();
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = 'konfirmasi_pengajuan.php?id=' + id;
+                window.location.href = 'konfirmasi_pencucian.php?id=' + id;
+            }
+        });
+        return false;
+    }
+    function selesai(id) {
+        Swal.fire({
+            title: 'Selesaikan Pencucian?',
+            text: "Yakin ingin menandai pencucian ini sebagai selesai?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#007bff',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, selesaikan!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'selesai_pencucian.php?id=' + id;
             }
         });
         return false;

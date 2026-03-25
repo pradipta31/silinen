@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
         ('$id_linen_ruangan', '$jumlah', '$tanggal', '$keterangan', '$status')");
         
         if ($query) {
-            header('location: linen_ruangan.php?pesan=berhasil');
+            header('location: data_pencucian.php?pesan=berhasil');
         } else {
             header('location: tambah_pencucian.php?pesan=gagal');
         }
