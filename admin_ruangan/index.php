@@ -7,6 +7,7 @@
     // Judul halaman dan Deskripsi Halaman
     $pageTitle = "Dashboard";
     $pageDesc = "Control Panel";
+    $_SESSION['active_menu'] = 'dashboard';
     ob_start(); 
     
 ?>

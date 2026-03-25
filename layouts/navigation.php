@@ -39,43 +39,27 @@
                     <i class="fa fa-building"></i> <span>Ruangan</span>
                 </a>
             </li>
-<<<<<<< HEAD
-            <li class="treeview <?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>">
-                <a href="#">
-=======
-            <!-- <li class="<?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>">
+            <li class="<?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>">
                 <a href="../admin/data_linen.php">
->>>>>>> f9c0bce815027f2d6e4fb8b07706993949d64002
-                    <i class="fa fa-bed"></i> <span>Linen</span>
-                    <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-bed"></i> <span>Data Linen</span>
                 </a>
-<<<<<<< HEAD
-                <ul class="treeview-menu">
-                    <li><a href="../admin/data_linen.php"><i class="fa fa-bed"></i> Data Linen</a></li>
-                    <li><a href="../admin/linen_bersih.php"><i class="fa fa-check-circle"></i> Linen Bersih</a></li>
-                    <li><a href="../admin/linen_kotor.php"><i class="fa fa-exclamation-circle"></i> Linen Kotor</a></li>
-=======
-            </li> -->
-            <li class="treeview <?= in_array($_SESSION['active_menu'], ['linen', 'bersih', 'kotor']) ? 'active' : '' ?>">
-                <a href="#">
-                    <i class="fa fa-bed"></i> <span>Linen</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li class="<?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>"><a href="data_linen.php"><i class="fa fa-list"></i> Daftar Linen</a></li>
-                    <li class="<?= $_SESSION['active_menu'] == 'bersih' ? 'active' : '' ?>"><a href="data_linen_bersih.php"><i class="fa fa-check-circle"></i> Linen Bersih</a></li>
-                    <li class="<?= $_SESSION['active_menu'] == 'kotor' ? 'active' : '' ?>"><a href="data_linen_kotor.php"><i class="fa fa-exclamation-circle"></i> Linen Kotor</a></li>
->>>>>>> f9c0bce815027f2d6e4fb8b07706993949d64002
-                </ul>
             </li>
-            <li class="<?= $_SESSION['active_menu'] == 'distribusi' ? 'active' : '' ?>">
-                <a href="../admin/data_distribusi_laundry.php">
-<<<<<<< HEAD
-                    <i class="fa fa-tint"></i> <span>Distribusi Laundry</span>
-=======
-                    <i class="fa fa-shopping-cart"></i> <span>Distribusi Laundry</span>
->>>>>>> f9c0bce815027f2d6e4fb8b07706993949d64002
+            <li class="<?= $_SESSION['active_menu'] == 'linen_ruangan' ? 'active' : '' ?>">
+                <a href="../admin/linen_ruangan.php">
+                    <i class="fa fa-bed"></i> <span>Linen Ruangan</span>
                 </a>
+            </li>
+            <li class="treeview <?= $_SESSION['active_menu'] == 'distribusi' ? 'active' : '' ?>">
+                <a href="#">
+                    <i class="fa fa-tint"></i> <span>Distribusi</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="../admin/data_pengajuan.php"><i class="fa fa-paper-plane"></i> Pengajuan Linen</a></li>
+                    <li><a href="../admin/data_pencucian.php"><i class="fa fa-tint"></i> Permohonan Pencucian</a></li>
+                    <!-- <li><a href="../admin/linen_bersih.php"><i class="fa fa-check-circle"></i> Linen Bersih</a></li>
+                    <li><a href="../admin/linen_kotor.php"><i class="fa fa-exclamation-circle"></i> Linen Kotor</a></li> -->
+                </ul>
             </li>
             <li class="header">REPORT</li>
             <li><a href="#"><i class="fa fa-book"></i> <span>Laporan</span></a></li>
@@ -88,19 +72,21 @@
 
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active">
-                <a href="#">
+            <li class="<?= $_SESSION['active_menu'] == 'dashboard' ? 'active' : '' ?>">
+                <a href="../admin_ruangan/">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
-            <li class="treeview">
+            <li class="treeview <?= $_SESSION['active_menu'] == 'linen' ? 'active' : '' ?>">
                 <a href="#">
                     <i class="fa fa-bed"></i> <span>Linen</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-plus"></i> Tambah Linen Baru</a></li>
-                    <li><a href="#"><i class="fa fa-arrow-circle-right"></i> Data Linen</a></li>
+                    <!-- <li><a href="../admin_ruangan/data_linen.php"><i class="fa fa-bed"></i> Data Linen</a></li> -->
+                    <li><a href="../admin_ruangan/data_pengajuan.php"><i class="fa fa-paper-plane"></i> Pengajuan Linen</a></li>
+                    <li><a href="../admin_ruangan/linen_ruangan.php"><i class="fa fa-bed"></i> Linen Ruangan</a></li>
+                    <li><a href="../admin_ruangan/data_pencucian.php"><i class="fa fa-tint"></i> Permohonan Pencucian</a></li>
                 </ul>
             </li>
             <li class="header">REPORT</li>

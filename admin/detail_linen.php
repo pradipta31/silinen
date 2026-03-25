@@ -53,11 +53,9 @@ $ruanganData = mysqli_query($koneksi, "SELECT r.*, u.nama as admin_ruangan
 
 $linenRuangan = mysqli_query($koneksi, "SELECT 
             lr.*,
-            u.nama as admin_ruangan,
             r.nama_ruangan,
             l.nama_linen
           FROM linen_ruangan lr
-          LEFT JOIN users u ON lr.id_user = u.id
           LEFT JOIN ruangan r ON lr.id_ruangan = r.id
           LEFT JOIN linen l ON lr.id_linen = l.id");
 ob_start();
@@ -136,34 +134,29 @@ ob_start();
                                             <tr>
                                                 <th>No</th>
                                                 <th>Ruangan</th>
-                                                <th>Linen</th>
-                                                <th>Linen Terpakai</th>
-                                                <th>Linen Cadangan</th>
+                                                <th>Nama Linen</th>
+                                                <th>Jumlah</th>
                                             </tr>
 
                                             <?php
                                             $no = 1;
-                                            $total_terpakai = 0;
-                                            $total_cadangan = 0;
+                                            $jumlah = 0;
 
                                             while ($rLR = mysqli_fetch_assoc($linenRuangan)):
-                                                $total_terpakai += $rLR['linen_terpakai'];
-                                                $total_cadangan += $rLR['linen_cadangan'];
+                                                $jumlah += $rLR['jumlah_linen'];
                                             ?>
                                                 <tr>
                                                     <td><?= $no++; ?></td>
                                                     <td><?= $rLR['nama_ruangan']; ?></td>
                                                     <td><?= $rLR['nama_linen']; ?></td>
-                                                    <td><?= $rLR['linen_terpakai']; ?> pcs</td>
-                                                    <td><?= $rLR['linen_cadangan']; ?> pcs</td>
+                                                    <td><?= $rLR['jumlah_linen']; ?> pcs</td>
                                                 </tr>
                                             <?php endwhile; ?>
 
                                             <!-- Baris Total -->
                                             <tr style="background-color: #f5f5f5; font-weight: bold;">
                                                 <td colspan="3" align="center">TOTAL:</td>
-                                                <td><?= $total_terpakai; ?> pcs</td>
-                                                <td><?= $total_cadangan; ?> pcs</td>
+                                                <td><?= $jumlah; ?> pcs</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -259,9 +252,9 @@ ob_start();
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="linen_terpakai<?= $data['id'] ?>">Linen Terpakai</label>
+                                                        <label for="linen_terpakai<?= $data['id'] ?>">Jumlah</label>
                                                         <input type="number" class="form-control" id="linen_terpakai<?= $data['id'] ?>"
-                                                            name="linen_terpakai" min="1" max="<?= htmlspecialchars($linenData['sisa_linen'] ?? 0) ?>" required
+                                                            name="jumlah" min="1" max="<?= htmlspecialchars($linenData['sisa_linen'] ?? 0) ?>" required
                                                             oninput="hitungSisaLinen(<?= $data['id'] ?>)">
                                                         <small class="text-muted">Sisa linen tersedia: <?= htmlspecialchars($linenData['sisa_linen'] ?? 0) ?> Pcs</small>
                                                         <!-- Kalkulasi untuk linen terpakai -->
@@ -272,7 +265,7 @@ ob_start();
 
                                                     <div class="form-group">
                                                         <label for="linen_cadangan<?= $data['id'] ?>">Linen Cadangan</label>
-                                                        <input type="number" class="form-control" id="linen_cadangan<?= $data['id'] ?>"
+                                                        <input type="hidden" class="form-control" id="linen_cadangan<?= $data['id'] ?>"
                                                             name="linen_cadangan" min="1" max="<?= htmlspecialchars($linenData['sisa_linen'] ?? 0) ?>" required
                                                             oninput="hitungSisaLinen(<?= $data['id'] ?>)">
                                                         <small class="text-muted">Sisa linen tersedia: <?= htmlspecialchars($linenData['sisa_linen'] ?? 0) ?> Pcs</small>

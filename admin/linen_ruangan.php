@@ -5,9 +5,9 @@ $username = $_SESSION['username'];
 $query = mysqli_query($koneksi, "SELECT * FROM users WHERE username = '$username'");
 $row = mysqli_fetch_assoc($query);
 
-$pageTitle = "Data Jadwal";
-$pageDesc = "Data Jadwal";
-$_SESSION['active_menu'] = 'linen';
+$pageTitle = "Data Linen Ruangan";
+$pageDesc = "Data Linen Ruangan";
+$_SESSION['active_menu'] = 'linen_ruangan';
 
 // CSS untuk calendar view
 $additionalCSS = [
@@ -62,7 +62,7 @@ ob_start();
                                 <?php
                                     if($r['admin_ruangan'] != 0){
                                 ?>
-                                <a href="data_linen.php?id_ruangan=<?= $r['id']; ?>" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-circle-right"></i></a>
+                                <a href="data_linen_ruangan.php?id_ruangan=<?= $r['id']; ?>" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-circle-right"></i></a>
                                 <?php
                                     }else{
 

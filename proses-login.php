@@ -17,6 +17,12 @@
             }else if($hak_akses == 'admin_ruangan'){
                 $_SESSION['status'] = 'login';
                 header('location: admin_ruangan/');
+            }else if($hak_akses == 'petugas_laundry'){
+                $_SESSION['status'] = 'login';
+                header('location: petugas_laundry/');
+            }else if($hak_akses == 'kepala_penanggung_jawab'){
+                $_SESSION['status'] = 'login';
+                header('location: kepala_penanggung_jawab/');
             }
         }else{
             header('location: index.php?pesan=gagal');

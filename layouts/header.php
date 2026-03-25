@@ -1,12 +1,12 @@
 <?php
-    if(session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-    include '../config.php';
-    include '../koneksi.php';
-    $username = $_SESSION['username'];
-    $query = mysqli_query($koneksi, "SELECT * FROM users WHERE username = '$username'");
-    $row = mysqli_fetch_assoc($query);
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include '../config.php';
+include '../koneksi.php';
+$username = $_SESSION['username'];
+$query = mysqli_query($koneksi, "SELECT * FROM users WHERE username = '$username'");
+$row = mysqli_fetch_assoc($query);
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,8 +24,8 @@
     <link rel="stylesheet" href="../assets/plugins/iCheck/flat/blue.css">
     <link rel="stylesheet" href="../assets/plugins/morris/morris.css">
     <link rel="stylesheet" href="../assets/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-    <?php if(!empty($additionalCSS)): ?>
-        <?php foreach($additionalCSS as $css): ?>
+    <?php if (!empty($additionalCSS)): ?>
+        <?php foreach ($additionalCSS as $css): ?>
             <link rel="stylesheet" href="<?= htmlspecialchars($css) ?>">
         <?php endforeach; ?>
     <?php endif; ?>
@@ -33,10 +33,10 @@
 
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
-        <?php 
-          if($_SESSION['status']!="login"){
+        <?php
+        if ($_SESSION['status'] != "login") {
             header("location:../index.php?pesan=belum_login");
-          }
+        }
         ?>
         <header class="main-header">
             <a href="#" class="logo">
@@ -49,6 +49,38 @@
                 </a>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+                        <?php
+                        if ($row['hak_akses'] != 'admin_ruangan') {
+                            $notif = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM pengajuan WHERE status = 1");
+                        }else{
+                            $notif = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM pengajuan WHERE status = 2");
+                        }
+                        
+                        $total = mysqli_fetch_assoc($notif)['total'];
+                        ?>
+
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <?php if ($total > 0): ?>
+                                    <span class="label label-warning"><?= $total ?></span>
+                                <?php endif; ?>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">Notifikasi Pengajuan</li>
+                                <li>
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="data_pengajuan.php">
+                                                <i class="fa fa-info-circle text-aqua"></i>
+                                                Ada <?= $total ?> pengajuan perlu konfirmasi
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="data_pengajuan.php">Lihat Pengajuan</a></li>
+                            </ul>
+                        </li>
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="../assets/images/avatar.png" class="user-image" alt="User Image">
@@ -63,9 +95,6 @@
                                     </p>
                                 </li>
                                 <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
                                     <div class="pull-right">
                                         <a href="../logout.php" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
@@ -88,4 +117,4 @@
                     <li class="active"><?php echo isset($pageTitle) ? $pageTitle : 'Dashboard'; ?></li>
                 </ol>
             </section>
-        <?php include __DIR__ . '/navigation.php'; ?>
+            <?php include __DIR__ . '/navigation.php'; ?>

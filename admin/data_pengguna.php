@@ -76,8 +76,8 @@ ob_start();
               ?>
                 <tr>
                   <td><?= $no++; ?></td>
-                  <td><?= htmlspecialchars($data['username']) ?></td>
                   <td><?= htmlspecialchars($data['nama']) ?></td>
+                  <td><?= htmlspecialchars($data['username']) ?></td>
                   <td><?= htmlspecialchars($data['email']) ?></td>
                   <td>
                     <span class="label <?=
