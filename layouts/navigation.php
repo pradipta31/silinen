@@ -62,7 +62,16 @@
                 </ul>
             </li>
             <li class="header">REPORT</li>
-            <li><a href="#"><i class="fa fa-book"></i> <span>Laporan</span></a></li>
+            <li class="treeview <?= $_SESSION['active_menu'] == 'laporan' ? 'active' : '' ?>">
+                <a href="#">
+                    <i class="fa fa-file-text-o"></i> <span>Laporan</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="../admin/data_laporan_pengajuan.php"><i class="fa fa-file-text-o"></i> Laporan Pengajuan Linen</a></li>
+                    <li><a href="../admin/data_laporan_pencucian.php"><i class="fa fa-file-text-o"></i> Laporan Pencucian Linen</a></li>
+                </ul>
+            </li>
         </ul>
 
         <!-- MENU UNTUK ADMIN RUANGAN -->
@@ -90,7 +99,7 @@
                 </ul>
             </li>
             <li class="header">REPORT</li>
-            <li><a href="#"><i class="fa fa-book"></i> <span>Laporan</span></a></li>
+            <li><a href="../admin/data_laporan.php"><i class="fa fa-book"></i> <span>Laporan</span></a></li>
         </ul>
 
         <!-- MENU UNTUK PETUGAS LAUNDRY -->
