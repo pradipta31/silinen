@@ -4,79 +4,172 @@
     $username = $_SESSION['username'];
     $query = mysqli_query($koneksi, "SELECT * FROM users WHERE username = '$username'");
     $row = mysqli_fetch_assoc($query);
+
+    $safeCount = function ($sql, $field = 'total') use ($koneksi) {
+        $result = mysqli_query($koneksi, $sql);
+        if (!$result) {
+            return 0;
+        }
+
+        $data = mysqli_fetch_assoc($result);
+        return isset($data[$field]) ? (int) $data[$field] : 0;
+    };
+
+    $totalPengajuan = $safeCount("SELECT COUNT(*) AS total FROM pengajuan");
+    $pencucianMasuk = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 1");
+    $sedangDicuci = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 2");
+    $selesaiDicuci = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 3");
+
+    $totalProses = $pencucianMasuk + $sedangDicuci + $selesaiDicuci;
+    $pctMasuk = $totalProses > 0 ? round(($pencucianMasuk / $totalProses) * 100) : 0;
+    $pctCuci = $totalProses > 0 ? round(($sedangDicuci / $totalProses) * 100) : 0;
+    $pctSelesai = $totalProses > 0 ? round(($selesaiDicuci / $totalProses) * 100) : 0;
+
+    $aktivitasQuery = mysqli_query(
+        $koneksi,
+        "SELECT dl.tanggal, dl.jumlah, dl.status, l.nama_linen, r.nama_ruangan
+         FROM distribusi_linen dl
+         LEFT JOIN linen_ruangan lr ON dl.id_linen_ruangan = lr.id
+         LEFT JOIN linen l ON lr.id_linen = l.id
+         LEFT JOIN ruangan r ON lr.id_ruangan = r.id
+         ORDER BY dl.tanggal DESC
+         LIMIT 5"
+    );
+
     // Judul halaman dan Deskripsi Halaman
     $pageTitle = "Dashboard";
-    $pageDesc = "Control Panel";
+    $pageDesc = "Ringkasan Petugas Laundry";
     $_SESSION['active_menu'] = 'dashboard';
     ob_start();
 ?>
 
 <section class="content">
-    <?php
-        echo '<div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Login Berhasil!</strong> Selamat datang '.$row['username'].' anda berhasil melakukan login pada aplikasi SILINEN!
-        </div>';
-    ?>
-
     <div class="row">
-
-        <!-- Card 1: Jumlah Linen Kotor -->
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-red">
                 <div class="inner">
-                    <h3>123</h3>
-                    <p>Jumlah Linen Kotor</p>
+                    <h3><?= number_format($pencucianMasuk) ?></h3>
+                    <p>Pencucian Masuk</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-tint"></i>
                 </div>
-                <a href="data_linen_kotor.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="data_pencucian.php" class="small-box-footer">Lihat Data <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-
-        <!-- Card 2: Jumlah Pencucian -->
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-blue">
                 <div class="inner">
-                    <h3>456</h3>
-                    <p>Jumlah Pencucian</p>
+                    <h3><?= number_format($sedangDicuci) ?></h3>
+                    <p>Sedang Dicuci</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-refresh"></i>
                 </div>
-                <a href="data_pencucian.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="data_pencucian.php" class="small-box-footer">Lihat Data <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-
-        <!-- Card 3: Jumlah Linen Bersih -->
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3>789</h3>
-                    <p>Jumlah Linen Bersih</p>
+                    <h3><?= number_format($selesaiDicuci) ?></h3>
+                    <p>Selesai Dicuci</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-check"></i>
                 </div>
-                <a href="data_linen_bersih.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="data_pencucian.php" class="small-box-footer">Lihat Data <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-
-        <!-- Card 4: Jumlah Distribusi Laundry -->
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>101112</h3>
-                    <p>Jumlah Distribusi Laundry</p>
+                    <h3><?= number_format($totalPengajuan) ?></h3>
+                    <p>Total Pengajuan</p>
                 </div>
                 <div class="icon">
-                    <i class="fa fa-truck"></i>
+                    <i class="fa fa-paper-plane"></i>
                 </div>
-                <a href="data_distribusi_laundry.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="data_pengajuan.php" class="small-box-footer">Lihat Pengajuan <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-bar-chart"></i> Progress Pencucian</h3>
+                </div>
+                <div class="box-body">
+                    <div class="progress-group">
+                        <span class="progress-text">Pencucian Masuk</span>
+                        <span class="progress-number"><b><?= $pencucianMasuk ?></b>/<?= $totalProses ?></span>
+                        <div class="progress sm">
+                            <div class="progress-bar progress-bar-red" style="width: <?= $pctMasuk ?>%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-group">
+                        <span class="progress-text">Sedang Dicuci</span>
+                        <span class="progress-number"><b><?= $sedangDicuci ?></b>/<?= $totalProses ?></span>
+                        <div class="progress sm">
+                            <div class="progress-bar progress-bar-primary" style="width: <?= $pctCuci ?>%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-group" style="margin-bottom: 0;">
+                        <span class="progress-text">Selesai Dicuci</span>
+                        <span class="progress-number"><b><?= $selesaiDicuci ?></b>/<?= $totalProses ?></span>
+                        <div class="progress sm">
+                            <div class="progress-bar progress-bar-green" style="width: <?= $pctSelesai ?>%"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-clock-o"></i> Aktivitas Terbaru</h3>
+                </div>
+                <div class="box-body" style="max-height: 260px; overflow: auto;">
+                    <?php if ($aktivitasQuery && mysqli_num_rows($aktivitasQuery) > 0): ?>
+                        <ul class="products-list product-list-in-box">
+                            <?php while ($aktivitas = mysqli_fetch_assoc($aktivitasQuery)): ?>
+                                <?php
+                                    $statusLabel = 'Unknown';
+                                    $statusClass = 'label-default';
+
+                                    if ((int) $aktivitas['status'] === 1) {
+                                        $statusLabel = 'Pengambilan';
+                                        $statusClass = 'label-warning';
+                                    } elseif ((int) $aktivitas['status'] === 2) {
+                                        $statusLabel = 'Pencucian';
+                                        $statusClass = 'label-primary';
+                                    } elseif ((int) $aktivitas['status'] === 3) {
+                                        $statusLabel = 'Selesai';
+                                        $statusClass = 'label-success';
+                                    }
+                                ?>
+                                <li class="item">
+                                    <div class="product-info" style="margin-left: 0;">
+                                        <span class="product-title">
+                                            <?= htmlspecialchars($aktivitas['nama_linen']) ?>
+                                            <span class="label <?= $statusClass ?> pull-right"><?= $statusLabel ?></span>
+                                        </span>
+                                        <span class="product-description">
+                                            <?= htmlspecialchars($aktivitas['nama_ruangan']) ?> • <?= (int) $aktivitas['jumlah'] ?> pcs • <?= date('d M Y H:i', strtotime($aktivitas['tanggal'])) ?>
+                                        </span>
+                                    </div>
+                                </li>
+                            <?php endwhile; ?>
+                        </ul>
+                    <?php else: ?>
+                        <p class="text-muted" style="margin: 0;">Belum ada aktivitas pencucian terbaru.</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
     </div>
 
 </section>
