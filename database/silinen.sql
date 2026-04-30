@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2026 at 11:20 AM
+-- Generation Time: Apr 30, 2026 at 03:56 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,29 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `silinen`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `distribusi_linen`
---
-
-CREATE TABLE `distribusi_linen` (
-  `id` int(11) NOT NULL,
-  `id_linen_ruangan` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL,
-  `tanggal` datetime NOT NULL,
-  `keterangan` text NOT NULL,
-  `status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `distribusi_linen`
---
-
-INSERT INTO `distribusi_linen` (`id`, `id_linen_ruangan`, `jumlah`, `tanggal`, `keterangan`, `status`) VALUES
-(1, 2, 3, '2026-03-25 06:31:06', 'cuci karna kotor', 3),
-(2, 2, 2, '2026-03-25 06:46:26', 'Kotor', 3);
 
 -- --------------------------------------------------------
 
@@ -100,6 +77,29 @@ INSERT INTO `linen_ruangan` (`id`, `id_ruangan`, `id_linen`, `jumlah_linen`, `ta
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pencucian`
+--
+
+CREATE TABLE `pencucian` (
+  `id` int(11) NOT NULL,
+  `id_linen_ruangan` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `tanggal` datetime NOT NULL,
+  `keterangan` text NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pencucian`
+--
+
+INSERT INTO `pencucian` (`id`, `id_linen_ruangan`, `jumlah`, `tanggal`, `keterangan`, `status`) VALUES
+(1, 2, 3, '2026-03-25 06:31:06', 'cuci karna kotor', 3),
+(2, 2, 2, '2026-03-25 06:46:26', 'Kotor', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pengajuan`
 --
 
@@ -120,7 +120,8 @@ CREATE TABLE `pengajuan` (
 INSERT INTO `pengajuan` (`id`, `id_linen`, `id_ruangan`, `jumlah`, `tanggal`, `keterangan`, `status`) VALUES
 (1, 5, 2, 5, '2026-03-24 16:35:12', 'pengajuan baru', 2),
 (2, 4, 1, 5, '2026-03-25 02:05:35', 'Baru', 3),
-(3, 3, 1, 7, '2026-03-25 02:05:45', 'Baru', 3);
+(3, 3, 1, 7, '2026-03-25 02:05:45', 'Baru', 3),
+(4, 1, 1, 9, '2026-03-30 13:39:17', 'Untuk acara Bakti sosial', 1);
 
 -- --------------------------------------------------------
 
@@ -184,13 +185,6 @@ INSERT INTO `users` (`id`, `nama`, `username`, `email`, `password`, `hak_akses`,
 --
 
 --
--- Indexes for table `distribusi_linen`
---
-ALTER TABLE `distribusi_linen`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_id_linen_ruangan` (`id_linen_ruangan`);
-
---
 -- Indexes for table `linen`
 --
 ALTER TABLE `linen`
@@ -203,6 +197,13 @@ ALTER TABLE `linen_ruangan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_id_ruangan` (`id_ruangan`),
   ADD KEY `fk_id_linen` (`id_linen`);
+
+--
+-- Indexes for table `pencucian`
+--
+ALTER TABLE `pencucian`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_linen_ruangan` (`id_linen_ruangan`);
 
 --
 -- Indexes for table `pengajuan`
@@ -230,12 +231,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `distribusi_linen`
---
-ALTER TABLE `distribusi_linen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `linen`
 --
 ALTER TABLE `linen`
@@ -248,10 +243,16 @@ ALTER TABLE `linen_ruangan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `pencucian`
+--
+ALTER TABLE `pencucian`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ruangan`

@@ -14,18 +14,18 @@ $tanggal_awal = isset($_GET['tanggal_awal']) ? $_GET['tanggal_awal'] : date('Y-m
 $tanggal_akhir = isset($_GET['tanggal_akhir']) ? $_GET['tanggal_akhir'] : date('Y-m-d');
 
 // Query untuk data laporan pencucian
-$dataQuery = mysqli_query($koneksi, "SELECT dl.*, 
+$dataQuery = mysqli_query($koneksi, "SELECT p.*, 
     lr.id as id_linen_ruangan,
     l.nama_linen, l.kode_linen,
     r.nama_ruangan,
     u.nama as admin_ruangan
-    FROM distribusi_linen dl
-    LEFT JOIN linen_ruangan lr ON dl.id_linen_ruangan = lr.id
+    FROM pencucian p
+    LEFT JOIN linen_ruangan lr ON p.id_linen_ruangan = lr.id
     LEFT JOIN linen l ON lr.id_linen = l.id
     LEFT JOIN ruangan r ON lr.id_ruangan = r.id
     LEFT JOIN users u ON r.id_user = u.id
-    WHERE DATE(dl.tanggal) BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-    ORDER BY dl.tanggal DESC");
+    WHERE DATE(p.tanggal) BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
+    ORDER BY p.tanggal DESC");
 
 // Statistik
 $statistikQuery = mysqli_query($koneksi, "SELECT
@@ -34,7 +34,7 @@ $statistikQuery = mysqli_query($koneksi, "SELECT
     SUM(CASE WHEN status = 2 THEN 1 ELSE 0 END) as pencucian,
     SUM(CASE WHEN status = 3 THEN 1 ELSE 0 END) as selesai,
     SUM(jumlah) as total_linen
-    FROM distribusi_linen
+    FROM pencucian
     WHERE DATE(tanggal) BETWEEN '$tanggal_awal' AND '$tanggal_akhir'");
 $statistik = mysqli_fetch_assoc($statistikQuery);
 

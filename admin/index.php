@@ -9,13 +9,16 @@
     ];
 
     $safeCount = function ($sql, $field = 'total') use ($koneksi) {
-        $result = mysqli_query($koneksi, $sql);
-        if (!$result) {
+        try {
+            $result = mysqli_query($koneksi, $sql);
+            if (!$result) {
+                return 0;
+            }
+            $data = mysqli_fetch_assoc($result);
+            return isset($data[$field]) ? (int) $data[$field] : 0;
+        } catch (Exception $e) {
             return 0;
         }
-
-        $data = mysqli_fetch_assoc($result);
-        return isset($data[$field]) ? (int) $data[$field] : 0;
     };
 
     $totalJenisLinen = $safeCount("SELECT COUNT(*) AS total FROM linen WHERE status = 1");
@@ -26,10 +29,10 @@
     $pengajuanDikirim = $safeCount("SELECT COUNT(*) AS total FROM pengajuan WHERE status = 2");
     $pengajuanDiterima = $safeCount("SELECT COUNT(*) AS total FROM pengajuan WHERE status = 3");
 
-    $linenKotor = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 1");
-    $linenProses = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 2");
-    $linenBersih = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 3");
-    $linenTerdistribusi = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 4");
+    $linenKotor = $safeCount("SELECT COUNT(*) AS total FROM pencucian WHERE status = 1");
+    $linenProses = $safeCount("SELECT COUNT(*) AS total FROM pencucian WHERE status = 2");
+    $linenBersih = $safeCount("SELECT COUNT(*) AS total FROM pencucian WHERE status = 3");
+    $linenTerdistribusi = $safeCount("SELECT COUNT(*) AS total FROM pencucian WHERE status = 4");
 
     $trendQuery = mysqli_query(
         $koneksi,

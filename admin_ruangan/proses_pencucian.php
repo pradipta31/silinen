@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
 
     // Jika tidak ada error, proses insert
     if (empty($error)) {
-        $query = mysqli_query($koneksi, "INSERT INTO distribusi_linen (id_linen_ruangan, jumlah, tanggal, keterangan, status) VALUES 
+        $query = mysqli_query($koneksi, "INSERT INTO pencucian (id_linen_ruangan, jumlah, tanggal, keterangan, status) VALUES 
         ('$id_linen_ruangan', '$jumlah', '$tanggal', '$keterangan', '$status')");
         
         if ($query) {

@@ -5,8 +5,28 @@ $username = $_SESSION['username'];
 $query = mysqli_query($koneksi, "SELECT * FROM users WHERE username = '$username'");
 $row = mysqli_fetch_assoc($query);
 
+// Cek apakah user valid
+if (!$row) {
+    header("Location: ../index.php");
+    exit;
+}
+
 // Ambil id_linen dari parameter GET
 $id_linen = isset($_GET['id_linen']) ? intval($_GET['id_linen']) : 0;
+
+// Cek apakah id_linen valid
+if ($id_linen <= 0) {
+    header("Location: data_linen.php");
+    exit;
+}
+
+// Simpan id_linen dan id_ruangan ke session
+$_SESSION['last_id_linen'] = $id_linen;
+$ruanganQuery = mysqli_query($koneksi, "SELECT id FROM ruangan WHERE id_user = {$row['id']}");
+$ruanganData = mysqli_fetch_assoc($ruanganQuery);
+if ($ruanganData) {
+    $_SESSION['last_id_ruangan'] = $ruanganData['id'];
+}
 
 // CSS Tambahan untuk halaman ini
 $additionalCSS = [
@@ -46,14 +66,22 @@ $_SESSION['active_menu'] = 'linen';
 $linenQuery = mysqli_query($koneksi, "SELECT * FROM linen WHERE id = $id_linen");
 $linenData = mysqli_fetch_assoc($linenQuery);
 
+// Debug: Uncomment untuk melihat ID dan data
+// echo "<!-- Debug: ID Linen = $id_linen, Kode Linen = " . ($linenData ? $linenData['kode_linen'] : 'NULL') . " -->";
+
+// Query untuk stok di ruangan user
+$queryStokRuangan = mysqli_query($koneksi, "SELECT lr.jumlah_linen FROM linen_ruangan lr INNER JOIN ruangan r ON lr.id_ruangan = r.id WHERE lr.id_linen = $id_linen");
+$stokRuanganData = mysqli_fetch_assoc($queryStokRuangan);
+$stokRuangan = $stokRuanganData ? $stokRuanganData['jumlah_linen'] : 0;
+
 // Query untuk riwayat distribusi
-$riwayatQuery = mysqli_query($koneksi, "SELECT dl.*, lr.jumlah_linen, r.nama_ruangan, u.nama as admin_ruangan
-                                        FROM distribusi_linen dl
-                                        LEFT JOIN linen_ruangan lr ON dl.id_linen_ruangan = lr.id
+$riwayatQuery = mysqli_query($koneksi, "SELECT p.*, lr.jumlah_linen, r.nama_ruangan, u.nama as admin_ruangan
+                                        FROM pencucian p
+                                        LEFT JOIN linen_ruangan lr ON p.id_linen_ruangan = lr.id
                                         LEFT JOIN ruangan r ON lr.id_ruangan = r.id
                                         LEFT JOIN users u ON r.id_user = u.id
                                         WHERE lr.id_linen = $id_linen
-                                        ORDER BY dl.tanggal DESC");
+                                        ORDER BY p.tanggal DESC");
 
 ob_start();
 ?>
@@ -109,7 +137,7 @@ ob_start();
                                         <th>Stok Tersedia</th>
                                         <td>
                                             <span class="badge badge-success" style="font-size: 16px;">
-                                                <i class="fa fa-hashtag"></i> <?= $linenData['sisa_linen'] ?> pcs
+                                                <i class="fa fa-hashtag"></i> <?= $stokRuangan ?> pcs
                                             </span>
                                         </td>
                                     </tr>

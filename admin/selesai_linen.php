@@ -12,16 +12,16 @@ if(isset($_GET['id'])) {
     $id = mysqli_real_escape_string($koneksi, $_GET['id']);
 
         $dataQuery = mysqli_query($koneksi, "SELECT 
-            dl.*,
+            p.*,
             lr.id_linen as id_linen,
             l.nama_linen,
             l.sisa_linen,
             r.nama_ruangan
-            FROM distribusi_linen dl
-            INNER JOIN linen_ruangan lr ON dl.id_linen_ruangan = lr.id
+            FROM pencucian p
+            INNER JOIN linen_ruangan lr ON p.id_linen_ruangan = lr.id
             INNER JOIN ruangan r ON lr.id_ruangan = r.id
             INNER JOIN linen l ON lr.id_linen = l.id
-            WHERE dl.id = '$id'");
+            WHERE p.id = '$id'");
         $row = mysqli_fetch_assoc($dataQuery);
         $id_linen = $row['id_linen'];
         $jumlah_linen = 0;
@@ -32,7 +32,7 @@ if(isset($_GET['id'])) {
         $total = $jumlah_linen + $sisa_linen;
     
     // Update status menjadi 2 (Proses)
-    $query = mysqli_query($koneksi, "UPDATE distribusi_linen SET status = 3 WHERE id = '$id'");
+    $query = mysqli_query($koneksi, "UPDATE pencucian SET status = 3 WHERE id = '$id'");
     
     
     if($query) {

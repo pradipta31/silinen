@@ -7,6 +7,15 @@ include '../koneksi.php';
 $username = $_SESSION['username'];
 $query = mysqli_query($koneksi, "SELECT * FROM users WHERE username = '$username'");
 $row = mysqli_fetch_assoc($query);
+
+// Jika admin_ruangan, ambil nama ruangan
+if ($row['hak_akses'] == 'admin_ruangan') {
+    $queryRuangan = mysqli_query($koneksi, "SELECT nama_ruangan FROM ruangan WHERE id_user = '{$row['id']}' AND status = 1 LIMIT 1");
+    $ruangan = mysqli_fetch_assoc($queryRuangan);
+    $namaRuangan = $ruangan ? $ruangan['nama_ruangan'] : null;
+} else {
+    $namaRuangan = null;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -91,7 +100,7 @@ $row = mysqli_fetch_assoc($query);
                                     <img src="../assets/images/avatar.png" class="img-circle" alt="User Image">
                                     <p>
                                         <?= $row['username']; ?>
-                                        <small><?= $row['hak_akses']; ?></small>
+                                        <small><?php if ($row['hak_akses'] == 'admin_ruangan' && $namaRuangan): ?>Admin Ruangan <?= htmlspecialchars($namaRuangan) ?><?php elseif ($row['hak_akses'] == 'admin_ruangan' && !$namaRuangan): ?>Admin Ruangan belum diatur<?php else: ?><?= $row['hak_akses']; ?><?php endif; ?></small>
                                     </p>
                                 </li>
                                 <li class="user-footer">

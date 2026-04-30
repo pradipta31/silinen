@@ -8,19 +8,19 @@
     mysqli_begin_transaction($koneksi);
 
     try {
-        // Ambil data distribusi_linen termasuk jumlah dan id_linen
-        $query_get = mysqli_query($koneksi, "SELECT dl.jumlah, lr.id_linen 
-                                             FROM distribusi_linen dl
-                                             JOIN linen_ruangan lr ON dl.id_linen_ruangan = lr.id
-                                             WHERE dl.id = '$id'");
+        // Ambil data pencucian termasuk jumlah dan id_linen
+        $query_get = mysqli_query($koneksi, "SELECT p.jumlah, lr.id_linen 
+                                             FROM pencucian p
+                                             JOIN linen_ruangan lr ON p.id_linen_ruangan = lr.id
+                                             WHERE p.id = '$id'");
         $data = mysqli_fetch_assoc($query_get);
 
         if ($data) {
             $jumlah = $data['jumlah'];
             $id_linen = $data['id_linen'];
 
-            // Update status distribusi_linen ke 3
-            $query_update_status = mysqli_query($koneksi, "UPDATE distribusi_linen SET status = 3 WHERE id = '$id'");
+            // Update status pencucian ke 3
+            $query_update_status = mysqli_query($koneksi, "UPDATE pencucian SET status = 3 WHERE id = '$id'");
 
             // Tambah sisa_linen di tabel linen
             $query_update_linen = mysqli_query($koneksi, "UPDATE linen SET sisa_linen = sisa_linen + $jumlah WHERE id = '$id_linen'");

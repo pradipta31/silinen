@@ -24,9 +24,9 @@
     $pengajuanProses = $safeCount("SELECT COUNT(*) AS total FROM pengajuan WHERE status = 2");
     $pengajuanSelesai = $safeCount("SELECT COUNT(*) AS total FROM pengajuan WHERE status = 3");
 
-    $cuciPengambilan = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 1");
-    $cuciProses = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 2");
-    $cuciSelesai = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 3");
+    $cuciPengambilan = $safeCount("SELECT COUNT(*) AS total FROM pencucian WHERE status = 1");
+    $cuciProses = $safeCount("SELECT COUNT(*) AS total FROM pencucian WHERE status = 2");
+    $cuciSelesai = $safeCount("SELECT COUNT(*) AS total FROM pencucian WHERE status = 3");
 
     $totalPengajuan = $pengajuanBaru + $pengajuanProses + $pengajuanSelesai;
     $totalCuci = $cuciPengambilan + $cuciProses + $cuciSelesai;

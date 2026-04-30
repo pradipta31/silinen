@@ -21,6 +21,11 @@
     };
 
     $ruanganAktif = $safeCount("SELECT COUNT(*) AS total FROM ruangan WHERE id_user = $idUser AND status = 1");
+
+    // Query untuk mendapatkan data ruangan
+    $queryRuangan = mysqli_query($koneksi, "SELECT * FROM ruangan WHERE id_user = $idUser AND status = 1 LIMIT 1");
+    $rRuangan = mysqli_fetch_assoc($queryRuangan);
+
     $linenRuangan = $safeCount(
         "SELECT COALESCE(SUM(lr.jumlah_linen), 0) AS total
          FROM linen_ruangan lr
@@ -49,24 +54,24 @@
 
     $linenKotor = $safeCount(
         "SELECT COUNT(*) AS total
-         FROM distribusi_linen dl
-         INNER JOIN linen_ruangan lr ON dl.id_linen_ruangan = lr.id
+         FROM pencucian p
+         INNER JOIN linen_ruangan lr ON p.id_linen_ruangan = lr.id
          INNER JOIN ruangan r ON lr.id_ruangan = r.id
-         WHERE r.id_user = $idUser AND dl.status = 1"
+         WHERE r.id_user = $idUser AND p.status = 1"
     );
     $linenProses = $safeCount(
         "SELECT COUNT(*) AS total
-         FROM distribusi_linen dl
-         INNER JOIN linen_ruangan lr ON dl.id_linen_ruangan = lr.id
+         FROM pencucian p
+         INNER JOIN linen_ruangan lr ON p.id_linen_ruangan = lr.id
          INNER JOIN ruangan r ON lr.id_ruangan = r.id
-         WHERE r.id_user = $idUser AND dl.status = 2"
+         WHERE r.id_user = $idUser AND p.status = 2"
     );
     $linenSelesai = $safeCount(
         "SELECT COUNT(*) AS total
-         FROM distribusi_linen dl
-         INNER JOIN linen_ruangan lr ON dl.id_linen_ruangan = lr.id
+         FROM pencucian p
+         INNER JOIN linen_ruangan lr ON p.id_linen_ruangan = lr.id
          INNER JOIN ruangan r ON lr.id_ruangan = r.id
-         WHERE r.id_user = $idUser AND dl.status = 3"
+         WHERE r.id_user = $idUser AND p.status = 3"
     );
 
     $trendQuery = mysqli_query(
@@ -121,6 +126,9 @@
     $linenPctProses = $totalLaundry > 0 ? round(($linenProses / $totalLaundry) * 100) : 0;
     $linenPctSelesai = $totalLaundry > 0 ? round(($linenSelesai / $totalLaundry) * 100) : 0;
 
+    // Cek apakah user memiliki ruangan
+    $belumPunyaRuangan = ($ruanganAktif == 0);
+
     // Judul halaman dan Deskripsi Halaman
     $pageTitle = "Dashboard";
     $pageDesc = "Ringkasan Ruangan";
@@ -132,9 +140,15 @@
 <section class="content">
     <div class="silinen-dashboard">
         <div class="silinen-hero room-hero">
+            <?php if ($belumPunyaRuangan): ?>
+                <div class="alert alert-warning text-center" style="margin-bottom: 20px;">
+                    <h4>Belum Memiliki Ruangan</h4>
+                    <p>Silahkan hubungi admin terkait untuk mengatur ruangan Anda.</p>
+                </div>
+            <?php endif; ?>
             <div>
                 <span class="silinen-eyebrow">Dashboard Ruangan</span>
-                <h2>Halo, <?= htmlspecialchars($row['nama']) ?></h2>
+                <h2>Halo, <?= htmlspecialchars($row['nama']) ?><?php if ($rRuangan): ?> - Ruang (<?= htmlspecialchars($rRuangan['nama_ruangan']) ?>)<?php endif; ?></h2>
                 <p>Ringkasan pengajuan linen untuk ruangan Anda, termasuk progres pengiriman dan status laundry.</p>
             </div>
             <div class="silinen-date-card">

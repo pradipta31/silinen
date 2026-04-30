@@ -35,12 +35,12 @@ $queryRuangan = mysqli_query($koneksi, "SELECT * FROM ruangan WHERE id_user = '$
 $rRuangan = mysqli_fetch_assoc($queryRuangan);
 $id_ruangan = $rRuangan['id'];
 // Query untuk mengambil data ke database
-$dataQuery = mysqli_query($koneksi, "SELECT dl.*, 
+$dataQuery = mysqli_query($koneksi, "SELECT p.*, 
                  lr.id as id_linen_ruangan,
                  l.nama_linen as nama_linen, 
                  r.nama_ruangan as nama_ruangan
-          FROM distribusi_linen dl
-          LEFT JOIN linen_ruangan lr ON dl.id_linen_ruangan = lr.id
+          FROM pencucian p
+          LEFT JOIN linen_ruangan lr ON p.id_linen_ruangan = lr.id
           LEFT JOIN linen l ON lr.id_linen = l.id
           LEFT JOIN ruangan r ON lr.id_ruangan = r.id
           WHERE lr.id_ruangan = '$id_ruangan'");

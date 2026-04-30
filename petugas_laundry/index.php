@@ -16,9 +16,9 @@
     };
 
     $totalPengajuan = $safeCount("SELECT COUNT(*) AS total FROM pengajuan");
-    $pencucianMasuk = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 1");
-    $sedangDicuci = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 2");
-    $selesaiDicuci = $safeCount("SELECT COUNT(*) AS total FROM distribusi_linen WHERE status = 3");
+    $pencucianMasuk = $safeCount("SELECT COUNT(*) AS total FROM pencucian WHERE status = 1");
+    $sedangDicuci = $safeCount("SELECT COUNT(*) AS total FROM pencucian WHERE status = 2");
+    $selesaiDicuci = $safeCount("SELECT COUNT(*) AS total FROM pencucian WHERE status = 3");
 
     $totalProses = $pencucianMasuk + $sedangDicuci + $selesaiDicuci;
     $pctMasuk = $totalProses > 0 ? round(($pencucianMasuk / $totalProses) * 100) : 0;
@@ -27,12 +27,12 @@
 
     $aktivitasQuery = mysqli_query(
         $koneksi,
-        "SELECT dl.tanggal, dl.jumlah, dl.status, l.nama_linen, r.nama_ruangan
-         FROM distribusi_linen dl
-         LEFT JOIN linen_ruangan lr ON dl.id_linen_ruangan = lr.id
+        "SELECT p.tanggal, p.jumlah, p.status, l.nama_linen, r.nama_ruangan
+         FROM pencucian p
+         LEFT JOIN linen_ruangan lr ON p.id_linen_ruangan = lr.id
          LEFT JOIN linen l ON lr.id_linen = l.id
          LEFT JOIN ruangan r ON lr.id_ruangan = r.id
-         ORDER BY dl.tanggal DESC
+         ORDER BY p.tanggal DESC
          LIMIT 5"
     );
 
