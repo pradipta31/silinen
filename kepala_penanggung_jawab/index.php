@@ -72,7 +72,7 @@
                 <div class="icon">
                     <i class="fa fa-building"></i>
                 </div>
-                <a href="../admin/data_ruangan.php" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="data_ruangan.php" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
@@ -84,7 +84,7 @@
                 <div class="icon">
                     <i class="fa fa-bed"></i>
                 </div>
-                <a href="../admin/data_linen.php" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="data_linen.php" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
@@ -96,7 +96,7 @@
                 <div class="icon">
                     <i class="fa fa-cubes"></i>
                 </div>
-                <a href="../admin/data_linen.php" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="data_linen.php" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
@@ -108,7 +108,7 @@
                 <div class="icon">
                     <i class="fa fa-hospital-o"></i>
                 </div>
-                <a href="../admin/linen_ruangan.php" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="linen_ruangan.php" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -144,7 +144,7 @@
                     </div>
                 </div>
                 <div class="box-footer text-right">
-                    <a href="../admin/data_pengajuan.php" class="btn btn-sm btn-default">Lihat Data Pengajuan</a>
+                    <a href="data_pengajuan.php" class="btn btn-sm btn-default">Lihat Data Pengajuan</a>
                 </div>
             </div>
         </div>
@@ -179,7 +179,7 @@
                     </div>
                 </div>
                 <div class="box-footer text-right">
-                    <a href="../admin/data_pencucian.php" class="btn btn-sm btn-default">Lihat Data Pencucian</a>
+                    <a href="data_pencucian.php" class="btn btn-sm btn-default">Lihat Data Pencucian</a>
                 </div>
             </div>
         </div>

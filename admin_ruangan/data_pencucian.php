@@ -27,7 +27,7 @@ $inlineJS = '<script>
 // Judul halaman dan Deskripsi Halaman
 $pageTitle = "Pengajuan";
 $pageDesc = "Data Pengajuan";
-$_SESSION['active_menu'] = 'linen';
+$_SESSION['active_menu'] = 'distribusi';
 
 // QUERY untuk mengambil siapa yang login
 $id_user = $row['id'];

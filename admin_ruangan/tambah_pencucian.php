@@ -8,7 +8,7 @@ $row = mysqli_fetch_assoc($query);
 // Judul halaman dan Deskripsi Halaman
 $pageTitle = "Permohonan Pencucian";
 $pageDesc = "Buat Permohonan Pencucian Linen";
-$_SESSION['active_menu'] = 'linen';
+$_SESSION['active_menu'] = 'distribusi';
 
 // CSS Tambahan untuk halaman ini
 $additionalCSS = [

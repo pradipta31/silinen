@@ -25,9 +25,9 @@ $inlineJS = '<script>
     </script>';
 
 // Judul halaman dan Deskripsi Halaman
-$pageTitle = "Pengajuan";
-$pageDesc = "Data Pengajuan";
-$_SESSION['active_menu'] = 'linen';
+$pageTitle = "Linen Ruangan";
+$pageDesc = "Data Linen Ruangan";
+$_SESSION['active_menu'] = 'linen_ruangan';
 
 // QUERY untuk mengambil siapa yang login
 $id_user = $row['id'];

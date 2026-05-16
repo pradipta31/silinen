@@ -20,14 +20,6 @@ if ($id_linen <= 0) {
     exit;
 }
 
-// Simpan id_linen dan id_ruangan ke session
-$_SESSION['last_id_linen'] = $id_linen;
-$ruanganQuery = mysqli_query($koneksi, "SELECT id FROM ruangan WHERE id_user = {$row['id']}");
-$ruanganData = mysqli_fetch_assoc($ruanganQuery);
-if ($ruanganData) {
-    $_SESSION['last_id_ruangan'] = $ruanganData['id'];
-}
-
 // CSS Tambahan untuk halaman ini
 $additionalCSS = [
     '../assets/plugins/datatables/dataTables.bootstrap.css',
@@ -60,7 +52,7 @@ $inlineJS = '<script>
 // Judul halaman dan Deskripsi Halaman
 $pageTitle = "Detail Linen";
 $pageDesc = "Detail Linen";
-$_SESSION['active_menu'] = 'linen';
+$_SESSION['active_menu'] = 'linen_ruangan';
 
 // Query untuk mengambil data Linen
 $linenQuery = mysqli_query($koneksi, "SELECT * FROM linen WHERE id = $id_linen");
@@ -69,10 +61,14 @@ $linenData = mysqli_fetch_assoc($linenQuery);
 // Debug: Uncomment untuk melihat ID dan data
 // echo "<!-- Debug: ID Linen = $id_linen, Kode Linen = " . ($linenData ? $linenData['kode_linen'] : 'NULL') . " -->";
 
-// Query untuk stok di ruangan user
-$queryStokRuangan = mysqli_query($koneksi, "SELECT lr.jumlah_linen FROM linen_ruangan lr INNER JOIN ruangan r ON lr.id_ruangan = r.id WHERE lr.id_linen = $id_linen");
+// Query untuk stok di ruangan user yang sedang login
+$queryStokRuangan = mysqli_query($koneksi, "SELECT SUM(lr.jumlah_linen) AS jumlah_linen, COUNT(lr.id) AS jumlah_ruangan
+    FROM linen_ruangan lr
+    INNER JOIN ruangan r ON lr.id_ruangan = r.id
+    WHERE lr.id_linen = $id_linen AND r.id_user = {$row['id']}");
 $stokRuanganData = mysqli_fetch_assoc($queryStokRuangan);
 $stokRuangan = $stokRuanganData ? $stokRuanganData['jumlah_linen'] : 0;
+$jumlahRuanganUser = $stokRuanganData ? $stokRuanganData['jumlah_ruangan'] : 0;
 
 // Query untuk riwayat distribusi
 $riwayatQuery = mysqli_query($koneksi, "SELECT p.*, lr.jumlah_linen, r.nama_ruangan, u.nama as admin_ruangan
@@ -138,6 +134,14 @@ ob_start();
                                         <td>
                                             <span class="badge badge-success" style="font-size: 16px;">
                                                 <i class="fa fa-hashtag"></i> <?= $stokRuangan ?> pcs
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Jumlah Linen Ruangan Anda</th>
+                                        <td>
+                                            <span class="badge badge-primary" style="font-size: 16px;">
+                                                <i class="fa fa-building"></i> <?= $jumlahRuanganUser ?> ruangan
                                             </span>
                                         </td>
                                     </tr>

@@ -8,7 +8,7 @@ $row = mysqli_fetch_assoc($query);
 // Judul halaman dan Deskripsi Halaman
 $pageTitle = "Data Linen";
 $pageDesc = "Tambah Linen";
-$_SESSION['active_menu'] = 'linen';
+$_SESSION['active_menu'] = 'distribusi';
 
 // CSS Tambahan untuk halaman ini
 $additionalCSS = [
